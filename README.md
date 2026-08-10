@@ -1,2 +1,1 @@
 # LogisShop
-it
