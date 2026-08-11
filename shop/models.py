@@ -17,4 +17,10 @@ class Customer(models.Model):
 
    def __str__(self):
       return self.name
-   
+
+class Product(models.Model):
+   title = models.CharField(max_length=80)
+   description = models.TextField(max_length=1000)
+   price = models.IntegerField()
+   category_title = models.ForeignKey(Category, verbose_name="category_title")
+   image = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
