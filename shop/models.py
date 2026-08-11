@@ -5,7 +5,7 @@ class Category(models.Model):
    title = models.CharField(max_length=30)
 
    def __str__(self):
-      return self.name
+      return self.title
    
 
 class Customer(models.Model):
@@ -17,18 +17,20 @@ class Customer(models.Model):
    password = models.CharField(max_length=20)
 
    def __str__(self):
-      return self.name
+      return f"{self.first_name} {self.last_name}"
+
 
 class Product(models.Model):
    id = models.AutoField(primary_key=True, unique=True)
    title = models.CharField(max_length=80)
-   description = models.TextField(max_length=1000)
-   price = models.IntegerField()
+   description = models.TextField(max_length=1000, default='', blank=True, null=True)
+   price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
    category_title = models.ForeignKey(Category, verbose_name="category_title", on_delete=models.CASCADE)
-   image = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
+   image = models.ImageField(upload_to='upload/product/')
 
    def __str__(self):
-      return self.name
+      return self.title
+
 
 class Invoice(models.Model):
    class InvoiceStatus(models.TextChoices):
@@ -40,6 +42,7 @@ class Invoice(models.Model):
       CANCELED = 'لغو شده'
       DONE = 'انجام شده'
 
+   id = models.AutoField(primary_key=True, unique=True)
    product_id = models.ForeignKey(Product, verbose_name="product_id", on_delete=models.CASCADE)
    customer_id = models.ForeignKey(Customer, verbose_name="customer_id", on_delete=models.CASCADE)
    count = models.SmallIntegerField()
@@ -48,4 +51,4 @@ class Invoice(models.Model):
    status = models.CharField(max_length=15, choices=InvoiceStatus.choices, default=InvoiceStatus.UNPAID)
 
    def __str__(self):
-      return self.name
+      return f"Invoice ID : {self.id}"
