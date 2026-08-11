@@ -1,11 +1,617 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>LogixShop - Home</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>LogixShop | Home</title>
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        >
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+        >
+
+        <link rel="stylesheet" href="{% static "css/styles.css" %}">
+    </head>
+
 <body>
-   <center><h1>Index - Home Page</h1></center>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+    <div class="container py-2">
+
+        <a class="navbar-brand fw-bold fs-3" href="#">
+            LOGIX<span class="brand-dot">SHOP</span>
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <ul class="navbar-nav mx-auto gap-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#products">Products</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#categories">Categories</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#deals">About</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button class="icon-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+
+                <button class="icon-btn position-relative">
+                    <i class="bi bi-bag"></i>
+                    <span class="cart-count">2</span>
+                </button>
+
+                <button class="btn btn-dark rounded-pill px-4">
+                    Sign In
+                </button>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<section class="hero">
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <span class="hero-label">
+                    LOGIX COMMUNITY
+                </span>
+
+                <h4 class="hero-title">
+                    SHOP <span>SMARTER</span>
+                </h4>
+
+                <p class="hero-description">Great Products Better Deals</p>
+
+                <div class="d-flex gap-3 mt-5">
+
+                    <a href="#products" class="btn btn-dark hero-btn rounded">
+                        Shop Now
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+                    <a href="#categories" class="btn btn-outline-dark hero-btn rounded">
+                        Explore Categories
+                    </a>
+
+                </div>
+
+                <div class="hero-stats">
+
+                    <div>
+                        <strong>200+</strong>
+                        <span>Products</span>
+                    </div>
+
+                    <div>
+                        <strong>4.7</strong>
+                        <span>Customer rating</span>
+                    </div>
+
+                    <div>
+                        <strong>24/7</strong>
+                        <span>Support</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="hero-image-wrapper">
+
+                    <img
+                        src="{% static 'assets/vector512.png' %}"
+                        alt="Featured product"
+                        class="hero-image"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="section" id="categories">
+    <div class="container">
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">LIST</span>
+                <strong>CATEGORIES</strong>
+            </div>
+
+            <a href="#" class="view-all">
+                View all
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-6 col-lg-3">
+                <a href="#" class="category-card">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80">
+                    </div>
+                    <div class="category-content">
+                        <h5>Accessories</h5>
+                        <span>124 products</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <a href="#" class="category-card">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80">
+                    </div>
+                    <div class="category-content">
+                        <h5>Fashion</h5>
+                        <span>238 products</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <a href="#" class="category-card">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=700&q=80">
+                    </div>
+                    <div class="category-content">
+                        <h5>Electronics</h5>
+                        <span>186 products</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <a href="#" class="category-card">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80">
+                    </div>
+                    <div class="category-content">
+                        <h5>Home & Living</h5>
+                        <span>312 products</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section bg-light" id="products">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">LIST</span>
+                <strong>PRODUCTS</strong>
+            </div>
+
+            <a href="#" class="view-all">
+                View all
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <!-- PRODUCT -->
+
+            <div class="col-6 col-lg-3">
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge">NEW</span>
+
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80"
+                            alt="Watch"
+                        >
+
+                        <button class="quick-add">
+                            <i class="bi bi-bag-plus"></i>
+                            Add to cart
+                        </button>
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="product-category">
+                            Accessories
+                        </span>
+
+                        <h5>Minimal Classic Watch</h5>
+
+                        <div class="product-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <span>(42)</span>
+                        </div>
+
+                        <strong class="product-price">
+                            $129.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT -->
+
+            <div class="col-6 col-lg-3">
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge sale">
+                            -25%
+                        </span>
+
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
+                            alt="Shoes"
+                        >
+
+                        <button class="quick-add">
+                            <i class="bi bi-bag-plus"></i>
+                            Add to cart
+                        </button>
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="product-category">
+                            Fashion
+                        </span>
+
+                        <h5>Urban Runner Sneakers</h5>
+
+                        <div class="product-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star"></i>
+                            <span>(28)</span>
+                        </div>
+
+                        <strong class="product-price">
+                            $89.00
+                            <del>$119.00</del>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT -->
+
+            <div class="col-6 col-lg-3">
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80"
+                            alt="Headphones"
+                        >
+
+                        <button class="quick-add">
+                            <i class="bi bi-bag-plus"></i>
+                            Add to cart
+                        </button>
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="product-category">
+                            Electronics
+                        </span>
+
+                        <h5>Wireless Headphones</h5>
+
+                        <div class="product-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <span>(91)</span>
+                        </div>
+
+                        <strong class="product-price">
+                            $149.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT -->
+
+            <div class="col-6 col-lg-3">
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge">POPULAR</span>
+
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=700&q=80"
+                            alt="Desk"
+                        >
+
+                        <button class="quick-add">
+                            <i class="bi bi-bag-plus"></i>
+                            Add to cart
+                        </button>
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <span class="product-category">
+                            Home & Living
+                        </span>
+
+                        <h5>Modern Workspace Desk</h5>
+
+                        <div class="product-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span>(67)</span>
+                        </div>
+
+                        <strong class="product-price">
+                            $249.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="benefits">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+
+                    <div>
+                        <h5>Free shipping</h5>
+                        <p>Free delivery on orders over $100.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <div>
+                        <h5>Secure payment</h5>
+                        <p>Your payment information is always protected.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+
+                    <div>
+                        <h5>Easy returns</h5>
+                        <p>30-day hassle-free return policy.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-4">
+                <a href="#" class="footer-brand">
+                    Logix<span>Shop</span>
+                </a>
+
+                <p class="footer-description">
+                    A modern shopping experience built around
+                    quality, simplicity and great products.
+                </p>
+
+                <div class="socials">
+
+                    <a href="#">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h6>Shop</h6>
+
+                <a href="#">All products</a>
+                <a href="#">New arrivals</a>
+                <a href="#">Best sellers</a>
+                <a href="#">Deals</a>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h6>Company</h6>
+
+                <a href="#">About us</a>
+                <a href="#">Contact</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h6>Support</h6>
+
+                <a href="#">FAQ</a>
+                <a href="#">Shipping</a>
+                <a href="#">Returns</a>
+                <a href="#">Privacy</a>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h6>Contact</h6>
+                <a href="#">+98 910 888 5404</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 Logix Community ©</span>
+
+            <span>
+                Built with ❤️ by @Ya3inNazari
+            </span>
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
