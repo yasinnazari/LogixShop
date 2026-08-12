@@ -39,8 +39,7 @@ body {
   color: var(--black) !important;
 }
 
-.brand-dot,
-.footer-brand span {
+.brand-dot, .footer-brand span {
   color: var(--accent);
 }
 
@@ -278,7 +277,8 @@ body {
 }
 
 .category-content {
-  padding-top: 18px;
+  padding-top: 10px;
+  text-align: center;
 }
 
 .category-content h5 {
@@ -293,7 +293,6 @@ body {
   font-size: 13px;
   color: #888;
 }
-
 
 /* ================= PRODUCTS ================= */
 
@@ -630,11 +629,21 @@ footer {
   color: white;
 }
 
+.footer-image {
+  width: 100%;
+  height: 100%;
+  margin-left: 10rem;
+}
+
+.footer-sign-image {
+  width: 5%;
+  height: 100%;
+}
+
 .footer-brand {
   color: white;
   text-decoration: none;
-
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 800;
 }
 
