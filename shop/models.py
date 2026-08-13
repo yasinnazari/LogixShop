@@ -7,7 +7,7 @@ class Category(models.Model):
 
    def __str__(self):
       return self.title
-   
+
 
 class Customer(models.Model):
    id = models.AutoField(primary_key=True, unique=True)
@@ -23,6 +23,7 @@ class Product(models.Model):
    title = models.CharField(max_length=80)
    description = models.TextField(max_length=1000, default='', blank=True, null=True)
    price = models.DecimalField(max_digits=12, decimal_places=0, default=0)
+   discounted_price = models.DecimalField(max_digits=12, decimal_places=0, default=0)
    category_title = models.ForeignKey(Category, verbose_name="category_title", on_delete=models.CASCADE)
    is_sale = models.BooleanField(default=False)
    image = models.ImageField(upload_to='upload/product/')
