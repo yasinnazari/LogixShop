@@ -221,7 +221,3 @@ __marimo__/
 ../media
 media/upload/product
 media/*
-*.jpg
-*.jpeg
-*.png
-*.webp
