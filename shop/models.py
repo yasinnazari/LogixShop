@@ -16,9 +16,6 @@ class Customer(models.Model):
    email = models.EmailField(max_length=254)
    password = models.CharField(max_length=20)
 
-   def __str__(self):
-      return f"{self.first_name} {self.last_name}"
-
 
 class Product(models.Model):
    id = models.AutoField(primary_key=True, unique=True)
@@ -27,9 +24,6 @@ class Product(models.Model):
    price = models.DecimalField(max_digits=12, decimal_places=0, default=0)
    category_title = models.ForeignKey(Category, verbose_name="category_title", on_delete=models.CASCADE)
    image = models.ImageField(upload_to='upload/product/')
-
-   def __str__(self):
-      return self.title
 
 
 class Invoice(models.Model):
@@ -49,6 +43,3 @@ class Invoice(models.Model):
    address = models.CharField(max_length=300, blank=False)
    created_at = models.DateField(auto_now=False, auto_now_add=True)
    status = models.CharField(max_length=30, choices=InvoiceStatus.choices, default=InvoiceStatus.UNPAID)
-
-   def __str__(self):
-      return f"Invoice {self.id}"
