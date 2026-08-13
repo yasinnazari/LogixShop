@@ -14,7 +14,6 @@ def home(request):
 
       prod.full_star = full_star
       prod.half_star = half_star
-      prod.empty_star = empty_star
       prod.star_range = range(5)
 
    context = {
@@ -22,5 +21,5 @@ def home(request):
       'categories': all_categories
    }
 
-   return render(request, "./main/index.html", context)
+   return render(request, "./main/home.html", context)
 
