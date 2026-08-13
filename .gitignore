@@ -216,7 +216,12 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Media
 ./media
 ../media
 media/upload/product
 media/*
+*.jpg
+*.jpeg
+*.png
+*.webp
