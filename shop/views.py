@@ -15,6 +15,7 @@ def home(request):
       prod.full_star = full_star
       prod.half_star = half_star
       prod.empty_star = empty_star
+      prod.star_range = range(5)
 
    context = {
       'products': all_products,

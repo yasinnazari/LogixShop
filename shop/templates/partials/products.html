@@ -49,20 +49,24 @@
                         
                         <h6 class="mt-1"><a class="text-black" href="#">{{ product.title }}</a></h6>
                         
-                        {% for rate in numItems|add:product.rating %}
-                        
-                        {% endfor %}
                         <div class="product-rating">
                            <div class="rating-stars">
-                              <i class="bi bi-star-fill"></i>
-                              <i class="bi bi-star-fill"></i>
-                              <i class="bi bi-star-fill"></i>
-                              <i class="bi bi-star-fill"></i>
-                              <i class="bi bi-star-half"></i>
+                              {% for rate in product.star_range %}
+                                 {% if forloop.counter <= product.full_star %}
+                                    <i class="bi bi-star-fill"></i>
+                                 {% elif forloop.counter == product.full_star|add:"1" and product.half_star >= 0.5 %}
+                                    <i class="bi bi-star-half"></i>
+                                 {% else %}
+                                    <i class="bi bi-star"></i>
+                                 {% endif %}
+                              {% endfor %}
+
+                              <span class="rating-value">{{ product.rating }}</span>
                            </div>
 
-                           <span class="rating-value">4.5</span>
-                        </div>
+                     </div>
+
+
 
                         <i class="bi bi-tags"></i>
                         {% if product.is_sale %}
