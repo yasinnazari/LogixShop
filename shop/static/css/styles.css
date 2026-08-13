@@ -27,6 +27,9 @@ body {
   background: #fff;
 }
 
+a {
+  text-decoration: none;
+}
 
 /* ================= NAVBAR ================= */
 
@@ -323,43 +326,65 @@ body {
   transition: transform 0.5s ease;
 }
 
+.product-actions {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(15px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.product-image:hover .product-actions {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+
+.product-info-btn, .quick-add-btn {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #111;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.product-info-btn {
+  flex: 1;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product--btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.8);
+}
 
 .quick-add-btn {
-    position: absolute;
-    left: 50%;
-    bottom: 15px;
-    transform: translateX(-50%) translateY(10px);
-
-    width: calc(100% - 30px);
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
-    background: #000;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0;
-    transition: all 0.3s ease;
+  width: 48px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
 }
 
-.product-image:hover .quick-add-btn {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.quick-add-btn:hover {
-  background: #444;
-  color: #fff;
-}
-
-.quick-add-btn i {
-  font-size: 16px;
+.quick-add-btn:hover, .product-info-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 .discount-badge {
@@ -502,6 +527,8 @@ body {
   color: #888;
   font-size: 13px;
 }
+
+/* =========FOOTER=========== */
 
 footer {
   padding: 80px 0 30px;

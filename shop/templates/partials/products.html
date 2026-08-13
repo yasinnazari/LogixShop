@@ -31,29 +31,32 @@
                         {% endif %}
 
                         <img src="../media/{{ product.image }}" alt="product {{ product.id }}">
+           
+                        <div class="product-actions">
+                           <button class="product-info-btn" type="button">
+                              Show Detail
+                           </button>
 
-                        <button class="quick-add-btn mt-3" type="button">
-                           <i class="bi bi-bag-plus"></i>
-                           Add to cart
-                        </button>
-                        
+                           <button class="quick-add-btn" type="button">
+                              <i class="bi bi-cart-plus"></i>
+                           </button>
+                        </div>
+
                      </div>
                      
                      <div class="product-info mt-2">
-                        <span class="product-category">{{ product.category_title }}</span>
+                        <span class="product-category"><i class="bi bi-hash"></i> {{ product.category_title }}</span>
                         
-                        <h6 class="mt-1">{{ product.title }}</h6>
-
-                        <span class="product-price text-black-50">
-                           <i class="bi bi-tags"></i>
-                           {% if product.is_sale %}
-                              {{ product.discounted_price | intcomma }}</span>
-                              <del class="product-price text-danger">{{ product.price | intcomma }}</del>
-                           {% else %}
-                              {{ product.price | intcomma }}</span>
-                           {% endif %}
-                        </div>
+                        <h6 class="mt-1"><a class="text-black" href="#">{{ product.title }}</a></h6>
+                        <i class="bi bi-tags"></i>
+                        {% if product.is_sale %}
+                           <span class="product-price text-black-50">{{ product.discounted_price | intcomma }}</span>
+                           <del class="product-price text-danger">{{ product.price | intcomma }}</del>
+                        {% else %}
+                           <span class="product-price text-black-50">{{ product.price | intcomma }}</span>
+                        {% endif %}
                      </div>
+                  </div>
 
             </div>
 
