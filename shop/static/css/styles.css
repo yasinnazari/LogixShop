@@ -295,7 +295,7 @@ a {
 
 .section-divider {
   height: 1px;
-  margin: 18px 0;
+  margin: 10px 0;
   background: linear-gradient(
     90deg,
     transparent,
@@ -378,6 +378,24 @@ a {
 .quick-add-btn:hover, .product-info-btn:hover {
   background: rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
+}
+
+.quick-add-btn-disabled {
+  width: 48px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(237, 237, 237, 0.7);
+  color: #666;
+  font-size: 18px;
+  cursor: not-allowed;
+  opacity: 0.7;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .discount-badge {
@@ -479,7 +497,6 @@ a {
 
 .product-price del {
   margin-left: 5px;
-
   font-size: 13px;
   color: #999;
   font-weight: 400;
@@ -521,12 +538,10 @@ a {
   font-size: 13px;
 }
 
-
 /* =========FOOTER=========== */
 
 footer {
-  padding: 80px 0 30px;
-
+  padding: 55px 0 30px;
   background: #111;
   color: white;
 }

@@ -1,5 +1,5 @@
 {% load humanize %}
-{% load static %}
+
 <div class="section-divider"></div>
 
 <section class="section products-section" id="products">
@@ -17,29 +17,35 @@
 
       </div>
       
-      <div class="row g-4">
+      <div class="row g-5">
 
          {% for product in products|slice:":8" %}
 
             <div class="col-6 col-lg-3">
 
-                  <div class="product-card">
+                  <div class="product-card ">
 
                      <div class="product-image">
-                        {% if product.is_sale %}
+                        {% if product.is_sale and product.has_stock %}
                            <span class="discount-badge">Discounted</span>
                         {% endif %}
 
                         <img src="../media/{{ product.image }}" alt="product {{ product.id }}">
-           
+
                         <div class="product-actions">
                            <button class="product-info-btn" type="button">
                               Show Detail
                            </button>
-
-                           <button class="quick-add-btn" type="button">
-                              <i class="bi bi-cart-plus"></i>
-                           </button>
+                           
+                           {% if product.has_stock %}
+                              <button class="quick-add-btn" type="button">
+                                 <i class="bi bi-cart-plus"></i>
+                              </button>
+                           {% else %}      
+                                 <button class="quick-add-btn-disabled" type="button">
+                                    <i class="bi bi-cart-plus"></i>
+                                 </button>
+                           {% endif %}
                         </div>
 
                      </div>
@@ -66,16 +72,18 @@
 
                      </div>
 
-
-
                         <i class="bi bi-tags"></i>
-                        {% if product.is_sale %}
-                           <span class="product-price text-black-50">{{ product.discounted_price | intcomma }}</span>
-                           <del class="product-price text-danger">{{ product.price | intcomma }}</del>
+                        {% if product.has_stock == False %}
+                           <strong><span class="product-price text-danger">Sold Out</span></strong>
+                        {% elif product.is_sale %}
+                           <strong><span class="product-price text-black-50">{{ product.discounted_price | intcomma }}</span></strong>
+                           <strong><strike class="product-price text-danger">{{ product.price | intcomma }}</strike></strong>
                         {% else %}
-                           <span class="product-price text-black-50">{{ product.price | intcomma }}</span>
+                           <strong><span class="product-price text-black-50">{{ product.price | intcomma }}</span></strong>
                         {% endif %}
+
                      </div>
+
                   </div>
 
             </div>

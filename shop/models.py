@@ -31,6 +31,8 @@ class Product(models.Model):
    discounted_price = models.DecimalField(max_digits=12, decimal_places=0, default=0)
    category_title = models.ForeignKey(Category, verbose_name="category_title", on_delete=models.CASCADE)
    is_sale = models.BooleanField(default=False)
+   stock = models.IntegerField(default=0)
+   has_stock = models.BooleanField(default=False)
    rating = models.DecimalField(max_digits=3, decimal_places=1, default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
    image = models.ImageField(upload_to='upload/product/')
 
