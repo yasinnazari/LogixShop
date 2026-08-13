@@ -48,7 +48,10 @@
                         <span class="product-category"><i class="bi bi-hash"></i> {{ product.category_title }}</span>
                         
                         <h6 class="mt-1"><a class="text-black" href="#">{{ product.title }}</a></h6>
-
+                        
+                        {% for rate in numItems|add:product.rating %}
+                        
+                        {% endfor %}
                         <div class="product-rating">
                            <div class="rating-stars">
                               <i class="bi bi-star-fill"></i>
@@ -59,7 +62,6 @@
                            </div>
 
                            <span class="rating-value">4.5</span>
-                           <span class="rating-count">(128)</span>
                         </div>
 
                         <i class="bi bi-tags"></i>
