@@ -3,6 +3,7 @@ from django.db import models
 
 class Category(models.Model):
    title = models.CharField(max_length=30)
+   # image = models.ImageField(upload_to='upload/category/')
 
    def __str__(self):
       return self.title
@@ -23,6 +24,7 @@ class Product(models.Model):
    description = models.TextField(max_length=1000, default='', blank=True, null=True)
    price = models.DecimalField(max_digits=12, decimal_places=0, default=0)
    category_title = models.ForeignKey(Category, verbose_name="category_title", on_delete=models.CASCADE)
+   is_sale = models.BooleanField(default=False)
    image = models.ImageField(upload_to='upload/product/')
 
 
