@@ -1,0 +1,231 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+    LogixShop | About Us
+{% endblock %}
+
+{% block content %}
+
+<section class="about-hero">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+
+                <span class="section-label">
+                    ABOUT LOGIX COMMUNITY
+                </span>
+
+                <h1 class="about-title">
+                    Shopping should be
+                    <span>simple.</span>
+                </h1>
+
+                <div class="about-actions">
+
+                    <a href="#story" class="about-btn mt-3">
+                        Discover Our Story
+                        <i class="bi bi-arrow-down"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div class="about-image-wrapper">
+
+                    <img src="{% static 'assets/ShopAbout.jpg' %}" alt="Logix">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-story" id="story">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8 text-center">
+
+                <span class="section-label">
+                    LOGIXSHOP STORY
+                </span>
+
+                <h2 class="about-section-title">
+                    
+                </h2>
+
+                <p class="about-text">
+                    LogixShop is my first Django project, built as a way to turn what
+                    I was learning into something real.
+
+                    I started with the basics and gradually built the product system,
+                    templates, admin panel, and the rest of the store step by step.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-values">
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="about-value-card">
+                    <div class="value-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+
+                    <h4>Your Experience</h4>
+
+                    <p>Your experience is the most important thing for our team</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="about-value-card">
+
+                    <div class="value-icon">
+                        <i class="bi bi-coin"></i>
+                    </div>
+
+                    <h4>Fair Prices</h4>
+
+                    <p>Good products at prices that make sense</p>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="about-value-card">
+
+                    <div class="value-icon">
+                        <i class="bi bi-brightness-high-fill"></i>
+                    </div>
+
+                    <h4>Easy Shopping</h4>
+
+                    <p>Find what you need and place your order in just a few clicks</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-stats">
+
+    <div class="container">
+
+        <div class="about-stats-box">
+
+            <div class="row text-center">
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="about-stat">
+
+                        <strong>200+</strong>
+
+                        <span>Products</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="about-stat">
+
+                        <strong>50+</strong>
+
+                        <span>Categories</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="about-stat">
+
+                        <strong>4.7</strong>
+
+                        <span>Customer Rating</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="about-stat">
+
+                        <strong>24/7</strong>
+
+                        <span>Support</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-cta">
+
+    <div class="container">
+
+        <div class="about-cta-box">
+
+            <span class="section-label">
+                READY TO START?
+            </span>
+
+            <h2>Everything you need is <span>Here</span></h2>
+
+            <a href="" class="about-cta-btn mt-5">
+                Products
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
