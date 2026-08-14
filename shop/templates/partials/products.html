@@ -1,6 +1,6 @@
 {% load humanize %}
-
-<div class="section-divider"></div>
+{% comment %} 
+<div class="section-divider"></div> {% endcomment %}
 
 <section class="section products-section" id="products">
    <div class="container">
@@ -10,16 +10,18 @@
             <span class="section-label">LIST OF</span>
             <h2>PRODUCTS</h2>
          </div>
-
-         <a class="view-all" href="#">
-            View all <i class="bi bi-arrow-right"></i>
-         </a>
+         
+         {% if show_view_all %}
+            <a class="view-all" href="{% url 'products' %}">
+               View all <i class="bi bi-arrow-right"></i>
+            </a>
+         {% endif %}
 
       </div>
-      
+
       <div class="row g-5">
 
-         {% for product in products|slice:":8" %}
+         {% for product in products %}
 
             <div class="col-6 col-lg-3">
 
