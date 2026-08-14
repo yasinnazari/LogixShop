@@ -33,6 +33,10 @@ def products(request):
    return render(request, './main/products_list.html', context)
 
 
+def login(request):
+   return render(request, './main/login.html')
+
+
 def calculate_rating(all_products):
    for prod in all_products:
       rate = prod.rating

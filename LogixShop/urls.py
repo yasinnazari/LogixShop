@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
-from shop.views import home, about, products
+from shop.views import home, about, products, login
 from . import settings
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('', home, name="home"),
     path('about/', about, name="about"),
     path('products/', products, name="products"),
+    path('login/', login, name="login"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)
