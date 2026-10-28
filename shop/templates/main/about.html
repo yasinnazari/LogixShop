@@ -10,11 +10,9 @@
 <section class="about-hero">
 
     <div class="container">
-
         <div class="row align-items-center g-5">
 
             <div class="col-lg-6">
-
                 <span class="section-label">
                     ABOUT LOGIX COMMUNITY
                 </span>
@@ -27,27 +25,21 @@
                 <div class="about-actions">
 
                     <a href="#story" class="about-btn mt-3">
-                        Discover Our Story
+                        Story
                         <i class="bi bi-arrow-down"></i>
                     </a>
 
                 </div>
-
             </div>
 
 
             <div class="col-lg-6">
-
                 <div class="about-image-wrapper">
-
                     <img src="{% static 'assets/ShopAbout.jpg' %}" alt="Logix">
-
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
 </section>
@@ -56,18 +48,15 @@
 <section class="about-story" id="story">
 
     <div class="container">
-
         <div class="row justify-content-center">
 
             <div class="col-lg-8 text-center">
 
                 <span class="section-label">
-                    LOGIXSHOP STORY
+                    ABOUT
                 </span>
 
-                <h2 class="about-section-title">
-                    
-                </h2>
+                <h2 class="about-section-title"><span>LOGIXSHOP<span></h2><h2 class="about-section-title">STORY</h2>
 
                 <p class="about-text">
                     LogixShop is my first Django project, built as a way to turn what
@@ -80,22 +69,23 @@
             </div>
 
         </div>
-
     </div>
-
 </section>
+<div class="section-divider"></div>
 
 
-<section class="about-values">
 
+
+<section class="about-values mt-5">
+    
     <div class="container">
         <div class="row g-4">
+            <center><h3 class="">What's this shop points ?</h3></center>
             <div class="col-md-4">
                 <div class="about-value-card">
                     <div class="value-icon">
                         <i class="bi bi-lightning-charge"></i>
                     </div>
-
                     <h4>Your Experience</h4>
 
                     <p>Your experience is the most important thing for our team</p>
@@ -146,54 +136,34 @@
             <div class="row text-center">
 
                 <div class="col-6 col-lg-3">
-
                     <div class="about-stat">
-
                         <strong>200+</strong>
-
                         <span>Products</span>
-
                     </div>
-
                 </div>
 
 
                 <div class="col-6 col-lg-3">
-
                     <div class="about-stat">
-
                         <strong>15+</strong>
-
                         <span>Categories</span>
-
                     </div>
-
                 </div>
 
 
                 <div class="col-6 col-lg-3">
-
                     <div class="about-stat">
-
                         <strong>4.7</strong>
-
                         <span>Customer Rating</span>
-
                     </div>
-
                 </div>
 
 
                 <div class="col-6 col-lg-3">
-
                     <div class="about-stat">
-
                         <strong>24/7</strong>
-
                         <span>Support</span>
-
                     </div>
-
                 </div>
 
             </div>
@@ -217,7 +187,7 @@
 
             <h2>Everything you need is <span>Here</span></h2>
 
-            <a href="" class="about-cta-btn mt-5">
+            <a href="{% url 'products' %}" class="about-cta-btn mt-5">
                 Products
                 <i class="bi bi-arrow-right"></i>
             </a>

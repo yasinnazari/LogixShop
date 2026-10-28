@@ -41,7 +41,7 @@ def calculate_rating(all_products):
    for prod in all_products:
       rate = prod.rating
       full_star = int(rate)
-      half_star = rate - full_star >= 0.5
+      half_star = rate - full_star > 0.4
 
       prod.full_star = full_star
       prod.half_star = half_star

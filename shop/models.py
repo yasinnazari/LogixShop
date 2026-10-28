@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Category(models.Model):
    title = models.CharField(max_length=30)
-   # image = models.ImageField(upload_to='upload/category/')
+   category_image = models.ImageField(upload_to='upload/category/')
 
    def __str__(self):
       return self.title

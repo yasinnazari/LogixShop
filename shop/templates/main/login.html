@@ -1,140 +1,99 @@
 {% extends "main/base.html" %}
 
 {% block title %}
-    LogixShop | Sign In
+   LogixShop | Sign In
 {% endblock %}
 
 {% block content %}
 
-<section class="login-page">
+   <section class="login-page">
 
-    <div class="container">
-        <div class="login-wrapper">
+      <div class="container">
+         <div class="login-wrapper">
             <div class="login-card">
 
-                <div class="login-header">
+                  <div class="login-header">
+                     <span class="login-label">
+                        WELCOME 
+                     </span>
 
-                    <a href="/" class="login-logo">
-                        Logix<span>.</span>
-                    </a>
-
-                    <span class="login-label">
-                        WELCOME BACK
-                    </span>
-
-                    <h1>
-                        Sign in to<br>
-                        your account
-                    </h1>
-
-                    <p>Welcome! Enter your details</p>
-
-                </div>
+                     <h1>SIGN IN</h1>
+                  </div>
 
 
-                <form class="login-form">
-
-                    <div class="form-group">
+                  <form class="login-form">
+                     <div class="form-group">
 
                         <label for="email">
-                            Email address
+                           Email
                         </label>
 
                         <div class="input-wrapper">
+                              <i class="bi bi-envelope"></i>
 
-                            <i class="bi bi-envelope"></i>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="you@example.com"
-                                autocomplete="email"
-                                required
-                            >
-
+                              <input
+                                 type="email"
+                                 id="email"
+                                 name="email"
+                                 placeholder="you@example.com"
+                                 autocomplete="email"
+                                 required
+                              >
                         </div>
 
-                    </div>
+                     </div>
 
 
-                    <div class="form-group">
-
+                     <div class="form-group">
                         <div class="password-label">
-
-                            <label for="password">
-                                Password
-                            </label>
-
-                            <a href="#">
-                                Forgot password?
-                            </a>
-
+                              <label for="password">Password</label>
+                              <a href="#">Forgot password?</a>
                         </div>
 
                         <div class="input-wrapper">
 
-                            <i class="bi bi-lock"></i>
+                              <i class="bi bi-lock"></i>
 
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                                required
-                            >
+                              <input
+                                 type="password"
+                                 id="password"
+                                 name="password"
+                                 placeholder="Enter your password"
+                                 autocomplete="current-password"
+                                 required
+                              >
 
-                            <button
-                                type="button"
-                                class="password-toggle"
-                            >
-                                <i class="bi bi-eye"></i>
-                            </button>
+                              <button type="button" class="password-toggle">
+                                 <i class="bi bi-eye"></i>
+                              </button>
 
                         </div>
 
-                    </div>
+                     </div>
 
+                     <button type="submit" class="login-btn">Sign In</button>
 
-                    <button type="submit" class="login-btn">
-
-                        Sign In
-
-                        <i class="bi bi-arrow-right"></i>
-
-                    </button>
-
-
-                    <div class="login-divider">
-                        <span>or</span>
-                    </div>
-
-
-                    <button type="button" class="social-login">
-
+                     <button type="button" class="mt-5 social-login">
                         <i class="bi bi-google"></i>
-
                         Continue with Google
+                     </button>
 
-                    </button>
 
-
-                    <p class="signup-text">
+                     <p class="signup-text">
 
                         Don't have an account?
 
                         <a href="#">
-                            Create account
+                              Create account
                         </a>
 
-                    </p>
+                     </p>
 
-                </form>
+                  </form>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-</section>
+   </section>
 
 {% endblock %}
