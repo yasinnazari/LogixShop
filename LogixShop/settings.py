@@ -87,7 +87,7 @@ elif DATABASE_BACKEND == 'postgres':
     }
 
 else:
-    raise ValueError("DJANGO_DATABASE must be 'postgres' or 'sqlite'")
+    raise ValueError("DJANGO_DATABASE must be postgres or sqlite")
 
 
 # Password validation

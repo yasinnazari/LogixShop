@@ -2,8 +2,9 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Category(models.Model):
-   title = models.CharField(max_length=30)
+   title = models.CharField(max_length=40)
    category_image = models.ImageField(upload_to='upload/category/')
+   slug = models.CharField(max_length=40)
 
    def __str__(self):
       return self.title
@@ -42,13 +43,14 @@ class Product(models.Model):
 
 class Invoice(models.Model):
    class InvoiceStatus(models.TextChoices):
-      UNPAID = ('UNPAID', 'در انتظار پرداخت')
-      PAID = ('PAID', 'پرداخت شده')
-      PROCESSING = ('PROCESSING', 'در حال بررسی')
-      REJECTED = ('REJECTED', 'رد شده')
-      CONFIRMED = ('CONFIRMED', 'تایید شده')
-      CANCELED = ('CANCELED', 'لغو شده')
-      DONE = ('DONE', 'انجام شده')
+      UNPAID = ('UNPAID', 'Awaiting Payment')
+      PAID = ('PAID', 'Paid')
+      PROCESSING = ('PROCESSING', 'Processing')
+      REJECTED = ('REJECTED', 'Rejected')
+      CONFIRMED = ('CONFIRMED', 'Confirmed')
+      CANCELED = ('CANCELED', 'Canceled')
+      DONE = ('DONE', 'Done')
+
 
    id = models.AutoField(primary_key=True, unique=True)
    product_id = models.ForeignKey(Product, verbose_name="product_id", on_delete=models.CASCADE)
