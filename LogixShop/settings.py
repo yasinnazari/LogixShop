@@ -19,9 +19,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -75,6 +73,7 @@ if DATABASE_BACKEND == 'sqlite':
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
 elif DATABASE_BACKEND == 'postgres':
     DATABASES = {
         'default': {
@@ -86,6 +85,7 @@ elif DATABASE_BACKEND == 'postgres':
             'PORT': os.getenv('POSTGRES_PORT'),
         }
     }
+
 else:
     raise ValueError("DJANGO_DATABASE must be 'postgres' or 'sqlite'")
 
