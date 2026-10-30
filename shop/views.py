@@ -25,7 +25,7 @@ def products(request):
    all_products = Product.objects.all()
 
    calculate_rating(all_products)
-   
+
    context = {
       'products': all_products
    }
