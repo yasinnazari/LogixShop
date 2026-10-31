@@ -24,6 +24,7 @@ def new_order_number():
 def new_invoice_number():
    return new_public_number('INV')
 
+
 class Category(models.Model):
    title = models.CharField(max_length=40, unique=True)
    slug = models.SlugField(max_length=50, unique=True, null=True, blank=True)
