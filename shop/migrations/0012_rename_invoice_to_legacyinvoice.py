@@ -3,7 +3,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('shop', '0011_category_slug_alter_category_title_and_more'),
     ]
