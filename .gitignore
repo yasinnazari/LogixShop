@@ -165,3 +165,8 @@ tempCodeRunnerFile.py
 ../media
 media/upload/product
 media/*
+
+
+docs/*
+./docs
+
