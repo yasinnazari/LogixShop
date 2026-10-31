@@ -45,7 +45,8 @@ class Category(models.Model):
    def clean(self):
       super().clean()
       if self.parent_id == self.pk:
-         raise ValidationError({'parent': 'A category cannot be its own parent.'})
+         raise ValidationError({'parent': 'category cannot be its own parent'})
+
       ancestor = self.parent
       visited = set()
       while ancestor is not None:
@@ -56,21 +57,6 @@ class Category(models.Model):
 
    def __str__(self):
       return self.title
-
-
-class Customer(models.Model):
-   """Legacy customer records retained for historical compatibility only."""
-
-   id = models.AutoField(primary_key=True, unique=True)
-   first_name = models.CharField(max_length=30)
-   last_name = models.CharField(max_length=30)
-   phone_number = models.CharField(max_length=20)
-   email = models.EmailField(max_length=254)
-   password = models.CharField(max_length=20)
-
-
-   def __str__(self):
-      return f"{self.first_name} {self.last_name}"
 
 
 class Product(models.Model):
