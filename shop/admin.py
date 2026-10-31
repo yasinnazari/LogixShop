@@ -4,7 +4,6 @@ from .models import (
    Cart,
    CartItem,
    Category,
-   Customer,
    InventoryReservation,
    Invoice,
    InvoiceItem,
@@ -24,7 +23,6 @@ class InvoiceAdmin(admin.ModelAdmin):
    list_display = ('invoice_number', 'order', 'status', 'document_type', 'total_amount', 'created_at')
 
 
-admin.site.register(Customer)
 admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(LegacyInvoice)

@@ -1,5 +1,7 @@
 # LogixShop MVP Domain Design
 
+> This earlier proposal is superseded by `docs/database-architecture.md` for the implemented database layer. The physical legacy customer table is preserved, but the active Django model and all new ownership relationships use `auth.User`.
+
 Status: reconnaissance-based design proposal. Verified repository facts are labelled **Fact**; recommendations and unknowns are kept separate.
 
 ## 1. Current relevant implementation
@@ -8,7 +10,7 @@ Status: reconnaissance-based design proposal. Verified repository facts are labe
 
 - The project is a server-rendered Django application using Django Templates.
 - `Category` and `Product` are the active catalog models. Products belong to one category and contain title, description, price, optional discount fields, stock fields, rating, and image.
-- `Customer` is a separate custom table with name, phone, email, and a plain `password` field. It is not connected to Django's built-in `User` model.
+- The physical legacy customer table contains name, phone, email, and a plain `password` field; it is no longer represented by an active Django model and is not connected to new ownership relationships.
 - `Invoice` currently links exactly one product to one customer, with quantity, address, date, and a status choice. It is not used by the current views.
 - Current views only render home, about, product-list, and a presentation-only login page. There is no cart, checkout, authentication processing, order creation, or payment code.
 - The product template displays cart controls, but they have no verified backend or JavaScript behavior. The cart badge is hard-coded to `0`.
@@ -119,11 +121,11 @@ The exact point at which stock is reserved versus decremented is an unresolved b
 
 Prefer Django's built-in authentication for the MVP. The installed settings already include Django auth, sessions, authentication middleware, and password validators, but the current login view does not use them.
 
-The existing `Customer` table should not be used for password authentication in its current form because its password field is a plain, length-limited text field and email is not unique. A sensible compatibility path is:
+The legacy customer table should not be used for password authentication because its password field is plain text and email is not unique. The implemented compatibility path is:
 
 - use Django's user identity for login and authorization;
 - add a profile/contact record only if the existing customer fields are needed;
-- decide explicitly whether existing `Customer` rows are migrated, linked, or retained as legacy records.
+- preserve existing legacy rows without copying their passwords into Django auth.
 
 For cart persistence, use a database cart keyed to the authenticated user and a session-key cart for anonymous visitors. Merge the session cart after login. This fits the existing template frontend and avoids making browser state the only source of cart data.
 
@@ -171,7 +173,7 @@ For cart persistence, use a database cart keyed to the authenticated user and a 
 
 ### Unresolved decisions
 
-- Whether existing `Customer` rows represent real users that must be migrated.
+- Whether legacy customer rows require a separately approved account-mapping process.
 - Whether guest checkout is required or only session carts before login.
 - Whether shipping is in MVP or only address capture.
 - Whether stock is reserved at order creation, payment initiation, or successful test payment.
@@ -188,7 +190,7 @@ For cart persistence, use a database cart keyed to the authenticated user and a 
 
 ## 8. Prerequisites for implementation
 
-1. Confirm the authentication choice and the migration/linking policy for `Customer`.
+1. Confirm any future authentication/account-mapping policy for legacy customer rows.
 2. Confirm guest checkout, shipping scope, currency, discount rules, and stock timing.
 3. Decide whether existing `Invoice` rows are legacy-only or must be converted.
 4. Define the order/payment status transition matrix and idempotency expectations.

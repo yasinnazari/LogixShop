@@ -5,8 +5,8 @@ Status: implemented database-layer proposal for the existing PostgreSQL developm
 ## Architecture decisions
 
 - The active identity remains Django's built-in `auth.User`. `AUTH_USER_MODEL` is not changed.
-- The existing `Customer` table is retained as legacy data only. New carts, orders, addresses, payments, and inventory records reference `auth.User`.
-- The original single-product `Invoice` model/table was renamed to `LegacyInvoice`/`shop_legacyinvoice` without deleting records. A new `Invoice` table represents financial documents.
+- The physical `shop_customer` table is retained as legacy data only; there is no active `Customer` model. New carts, orders, addresses, payments, and inventory records reference `auth.User`.
+- The original single-product invoice table was renamed to `LegacyInvoice`/`shop_legacyinvoice` without deleting records. Its active foreign key now points to `auth.User`; a new `Invoice` table represents financial documents.
 - Money is stored as integer Toman amounts with `currency='TOMAN'` defaults.
 - PostgreSQL constraints enforce local invariants. Cross-row operations such as checkout, stock reservation, refunds, and status transitions still require transactional services; those services are intentionally outside this database-layer task.
 - Provider/provider-product and product variants were not added: the repository has no provider/import-source or variant requirements. Adding either without evidence would be speculative.
@@ -23,6 +23,8 @@ Implemented migrations:
 
 - `0012_rename_invoice_to_legacyinvoice.py`: data-preserving table/model rename plus protective legacy foreign keys.
 - `0013_domain_models.py`: new domain tables, catalog fields, constraints, indexes, product-price normalization (`0` discount to `NULL`), and five legacy product-image gallery rows.
+- `0014_legacyinvoice_user_fk.py`: guarded migration of the legacy invoice owner column to `auth.User`; it refuses to guess mappings if legacy invoice rows exist.
+- `0015_remove_customer_state.py`: removes the deleted `Customer` model from Django's active state without dropping the physical legacy table.
 
 Post-migration counts:
 
@@ -43,7 +45,7 @@ The existing legacy records and product/category relationships were preserved. N
 ### Identity and catalog
 
 - `auth_user`: Django's current authentication identity. No custom user swap was attempted because the existing migration graph and populated `auth_user` table make an in-place swap unsafe.
-- `shop_customer`: legacy customer records, including the existing plaintext password field. It must not be used for new authentication and passwords must not be copied into Django auth.
+- `shop_customer`: legacy physical table, including the existing plaintext password field. It is no longer represented by an active Django model, must not be used for new authentication, and passwords must not be copied into Django auth.
 - `shop_category`: hierarchical catalog categories with nullable `parent_id`, unique nullable slug, soft-delete timestamp, ordering, and timestamps. Product deletion is protected by `PROTECT`; hierarchy-cycle prevention is model validation and must also be respected by admin/services.
 - `shop_product`: catalog product, current price/discount, stock, rating/rating count, publication status, soft-delete timestamp, category, and legacy single-image field. `discounted_price=NULL` means no discount; `is_sale` and `has_stock` remain legacy compatibility fields and should not drive new workflows.
 - `shop_productimage`: multiple product images with one conditional primary-image constraint. Existing `Product.image` values were copied as primary gallery rows; the old field remains for compatibility.
@@ -100,11 +102,11 @@ erDiagram
     PRODUCT ||--o{ INVENTORY_RESERVATION : reserves
     ORDER ||--o{ ORDER_STATUS_HISTORY : records
 
-    CUSTOMER ||--o{ LEGACY_INVOICE : legacy_customer
+    AUTH_USER ||--o{ LEGACY_INVOICE : legacy_user
     PRODUCT ||--o{ LEGACY_INVOICE : legacy_product
 ```
 
-`AUTH_USER`, `CUSTOMER`, and `LEGACY_INVOICE` represent the current authentication and compatibility boundary. New commerce relationships do not use the legacy tables.
+`AUTH_USER` and `LEGACY_INVOICE` represent the active authentication/compatibility boundary. The physical `shop_customer` table remains only for preservation and is not used by current models.
 
 ## Field and constraint summary
 
@@ -137,13 +139,13 @@ All new primary keys use PostgreSQL-backed `BigAutoField`. All monetary fields a
 
 ## Authentication migration strategy
 
-The repository has an applied built-in auth migration graph and a populated `auth_user` table. It also has an independent legacy `Customer` table with a plaintext password field. Replacing the user model now would require a staged migration involving auth permissions, sessions, admin logs, foreign keys, superuser preservation, and legacy-account mapping. That work was not safe to fold into this model migration.
+The repository has an applied built-in auth migration graph and a populated `auth_user` table. It also has an independent physical legacy customer table with a plaintext password field. Replacing the user model now would require a staged migration involving auth permissions, sessions, admin logs, foreign keys, superuser preservation, and legacy-account mapping. That work was not safe to fold into this model migration.
 
 Therefore:
 
 1. Keep built-in `auth.User` as the only active user entity.
 2. Do not copy legacy passwords.
-3. Do not use `Customer` for new authentication or commerce ownership.
+3. Do not use the legacy customer table for new authentication or commerce ownership.
 4. If email/phone login and verified identities are required, plan a separately approved user migration or authentication extension after an explicit account-mapping design.
 
 ## Tests and verification
@@ -158,7 +160,7 @@ Added focused tests in `shop/tests.py` for:
 - payment idempotency and positive refunds;
 - non-zero stock movements and positive reservations.
 
-Result: 7 tests passed against PostgreSQL. Django system checks passed, `makemigrations --check` reported no pending model changes, all migrations through `0013_domain_models` are applied, PostgreSQL admin smoke tests returned HTTP 200 for the new models, and existing foreign-key checks returned zero orphans.
+Result: 7 tests passed against PostgreSQL. Django system checks passed, `makemigrations --check` reported no pending model changes, all migrations through `0015_remove_customer_state` are applied, PostgreSQL admin smoke tests returned HTTP 200 for the new models, and existing foreign-key checks returned zero orphans.
 
 ## Remaining decisions and next commands
 

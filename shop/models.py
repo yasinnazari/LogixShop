@@ -125,7 +125,12 @@ class LegacyInvoice(models.Model):
 
    id = models.AutoField(primary_key=True, unique=True)
    product_id = models.ForeignKey(Product, verbose_name="product_id", on_delete=models.PROTECT)
-   customer_id = models.ForeignKey(Customer, verbose_name="customer_id", on_delete=models.PROTECT)
+   user = models.ForeignKey(
+      settings.AUTH_USER_MODEL,
+      related_name='legacy_invoices',
+      verbose_name='user',
+      on_delete=models.PROTECT,
+   )
    count = models.SmallIntegerField()
    address = models.CharField(max_length=300, blank=False)
    created_at = models.DateField(auto_now=False, auto_now_add=True)
