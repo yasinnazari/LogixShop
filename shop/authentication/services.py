@@ -93,6 +93,7 @@ def issue_email_challenge(*, user, purpose, target_email=''):
         )
 
     recipient = target_email or user.email
+
     try:
         send_mail(
             subject='Your LogixShop verification code',
@@ -104,9 +105,12 @@ def issue_email_challenge(*, user, purpose, target_email=''):
             recipient_list=[recipient],
             fail_silently=False,
         )
+
     except Exception as exc:
         EmailVerificationChallenge.objects.filter(pk=challenge.pk, consumed_at__isnull=True).update(consumed_at=timezone.now())
+
         raise EmailDeliveryError from exc
+
     return challenge
 
 

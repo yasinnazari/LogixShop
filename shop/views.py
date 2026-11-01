@@ -1,9 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from .models import Product, Category
+from django.db.models import Prefetch
+from .models import Category, Product, ProductImage
+
+
+def products_with_primary_images(queryset=None):
+   queryset = queryset if queryset is not None else Product.objects.all()
+   return queryset.prefetch_related(
+      Prefetch(
+         'images',
+         queryset=ProductImage.objects.filter(is_primary=True),
+         to_attr='primary_images',
+      )
+   )
 
 def home(request):
-   all_products = Product.objects.all()[:8]
+   all_products = products_with_primary_images()[:8]
    all_categories = Category.objects.all()
 
    calculate_rating(all_products)
@@ -22,7 +34,7 @@ def about(request):
 
 
 def products(request):
-   all_products = Product.objects.all()
+   all_products = products_with_primary_images()
 
    calculate_rating(all_products)
 

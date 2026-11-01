@@ -41,7 +41,6 @@ class DomainConstraintTests(TestCase):
          price=1000,
          discounted_price=900,
          stock=10,
-         image='upload/product/test.jpg',
       )
 
    def assert_integrity_error(self, callback):
@@ -127,15 +126,17 @@ class DomainConstraintTests(TestCase):
       self.assert_integrity_error(lambda: CartItem.objects.create(cart=cart, product=self.product, quantity=1))
 
    def test_product_image_has_one_primary_image(self):
-      ProductImage.objects.create(product=self.product, image='upload/product/gallery/one.jpg', is_primary=True)
+      ProductImage.objects.create(product=self.product, image='upload/product/one.jpg', is_primary=True)
+
       self.assert_integrity_error(lambda: ProductImage.objects.create(
          product=self.product,
-         image='upload/product/gallery/two.jpg',
+         image='upload/product/two.jpg',
          is_primary=True,
       ))
 
    def test_order_item_keeps_product_snapshot(self):
       order = self.order()
+
       item = OrderItem.objects.create(
          order=order,
          product=self.product,
@@ -145,6 +146,7 @@ class DomainConstraintTests(TestCase):
          quantity=1,
          line_total=900,
       )
+
       self.product.title = 'Changed product'
       self.product.save(update_fields=['title'])
       item.refresh_from_db()
@@ -152,10 +154,12 @@ class DomainConstraintTests(TestCase):
 
    def test_payment_attempt_and_refund_idempotency(self):
       order = self.order()
+
       attempt = PaymentAttempt.objects.create(order=order, gateway='test', amount=900, idempotency_key='payment-1')
       self.assert_integrity_error(lambda: PaymentAttempt.objects.create(
          order=order, gateway='test', amount=900, idempotency_key='payment-1'
       ))
+
       self.assert_integrity_error(lambda: Refund.objects.create(
          payment_attempt=attempt, amount=0, idempotency_key='refund-1'
       ))

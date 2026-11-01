@@ -24,6 +24,18 @@ class InvoiceAdmin(admin.ModelAdmin):
    list_display = ('invoice_number', 'order', 'status', 'document_type', 'total_amount', 'created_at')
 
 
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+   list_display = ('product_title', 'image', 'is_primary', 'sort_order', 'created_at')
+   list_filter = ('is_primary', 'created_at')
+   search_fields = ('product__title', 'product__id', 'alt_text')
+   list_select_related = ('product',)
+
+   @admin.display(ordering='product__title', description='Product title')
+   def product_title(self, obj):
+      return obj.product.title
+
+
 @admin.register(EmailVerificationChallenge)
 class EmailVerificationChallengeAdmin(admin.ModelAdmin):
    list_display = ('id', 'user', 'purpose', 'target_email', 'expires_at', 'attempts', 'max_attempts', 'consumed_at', 'sent_at')
@@ -46,7 +58,6 @@ admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(LegacyInvoice)
 admin.site.register(Address)
-admin.site.register(ProductImage)
 admin.site.register(Cart)
 admin.site.register(CartItem)
 admin.site.register(Order)

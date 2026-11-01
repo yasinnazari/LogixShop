@@ -218,7 +218,7 @@ class Migration(migrations.Migration):
             name='ProductImage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='upload/product/gallery/')),
+                ('image', models.ImageField(upload_to='upload/product/')),
                 ('alt_text', models.CharField(blank=True, max_length=160, null=True)),
                 ('sort_order', models.PositiveIntegerField(default=0)),
                 ('is_primary', models.BooleanField(default=False)),

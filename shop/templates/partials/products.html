@@ -32,7 +32,13 @@
                            <span class="discount-badge">Discounted</span>
                         {% endif %}
 
-                        <img src="../media/{{ product.image }}" alt="product {{ product.id }}">
+                        {% with primary_image=product.primary_images|first %}
+                           {% if primary_image %}
+                              <img src="{{ primary_image.image.url }}" alt="{{ primary_image.alt_text|default:product.title }}">
+                           {% else %}
+                              <div class="product-image-placeholder" role="img" aria-label="No image available">No image</div>
+                           {% endif %}
+                        {% endwith %}
 
                         <div class="product-actions">
                            <button class="product-info-btn" type="button">

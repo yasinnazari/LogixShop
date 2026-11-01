@@ -77,7 +77,6 @@ class Product(models.Model):
       ('PUBLISHED', 'Published'),
       ('ARCHIVED', 'Archived'),
    ), default='DRAFT')
-   image = models.ImageField(upload_to='upload/product/')
    created_at = models.DateTimeField(default=timezone.now)
    updated_at = models.DateTimeField(default=timezone.now)
    deleted_at = models.DateTimeField(null=True, blank=True)
@@ -216,7 +215,7 @@ class Address(models.Model):
 
 class ProductImage(models.Model):
    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-   image = models.ImageField(upload_to='upload/product/gallery/')
+   image = models.ImageField(upload_to='upload/product/')
    alt_text = models.CharField(max_length=160, null=True, blank=True)
    sort_order = models.PositiveIntegerField(default=0)
    is_primary = models.BooleanField(default=False)
