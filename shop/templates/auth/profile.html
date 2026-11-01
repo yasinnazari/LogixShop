@@ -1,3 +1,442 @@
 {% extends "main/base.html" %}
-{% block title %}Your profile{% endblock %}
-{% block content %}<section class="py-5"><div class="container col-md-5"><h1>Your profile</h1>{% include "auth/_errors.html" %}<p>Email: {{ request.user.email }}</p><form method="post" novalidate>{% csrf_token %}<p><label>First name <input name="first_name" value="{{ request.user.first_name }}" required></label>{% for error in errors.first_name %}<span class="text-danger">{{ error }}</span>{% endfor %}</p><p><label>Last name <input name="last_name" value="{{ request.user.last_name }}" required></label>{% for error in errors.last_name %}<span class="text-danger">{{ error }}</span>{% endfor %}</p><button class="btn btn-primary">Save profile</button></form><p class="mt-3"><a href="{% url 'shop:email_change' %}">Change email</a> · <a href="{% url 'shop:password_change' %}">Change password</a></p></div></section>{% endblock %}
+
+{% block title %}My Account | LogixShop{% endblock %}
+
+{% block content %}
+
+<style>
+    .profile-page {
+        background: #f8f9fc;
+        min-height: 85vh;
+        padding: 55px 0;
+        color: #202633;
+    }
+
+    .profile-header {
+        margin-bottom: 30px;
+    }
+
+    .profile-header h2 {
+        font-size: 27px;
+        font-weight: 750;
+        letter-spacing: -0.7px;
+    }
+
+    .profile-header p {
+        color: #858d9b;
+        font-size: 14px;
+    }
+
+    .profile-card {
+        background: #fff;
+        border: 1px solid #edf0f4;
+        border-radius: 16px;
+        box-shadow: 0 5px 25px rgba(20, 30, 50, .035);
+    }
+
+    .profile-sidebar {
+        padding: 28px 24px;
+        height: 100%;
+    }
+
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        border-radius: 22px;
+        background: #eef1ff;
+        color: #5365d9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .profile-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .profile-email {
+        font-size: 13px;
+        color: #9299a5;
+        word-break: break-word;
+    }
+
+    .profile-divider {
+        border-color: #edf0f4;
+        margin: 24px 0;
+    }
+
+    .profile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .profile-nav a {
+        text-decoration: none;
+        color: #737c8b;
+        padding: 12px 13px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: .2s;
+    }
+
+    .profile-nav a:hover,
+    .profile-nav a.active {
+        background: #f0f2ff;
+        color: #5264d8;
+    }
+
+    .profile-nav i {
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .profile-content {
+        padding: 30px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .section-description {
+        font-size: 13px;
+        color: #9299a5;
+        margin-bottom: 26px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #505a69;
+        margin-bottom: 8px;
+    }
+
+    .profile-input {
+        height: 46px;
+        border: 1px solid #e5e9ef;
+        border-radius: 9px;
+        font-size: 14px;
+        padding: 10px 13px;
+        box-shadow: none !important;
+    }
+
+    .profile-input:focus {
+        border-color: #7584ed;
+    }
+
+    .profile-input:disabled {
+        background: #f8f9fb;
+        color: #8a929e;
+    }
+
+    .save-btn {
+        background: #5365d9;
+        color: white;
+        border: none;
+        border-radius: 9px;
+        padding: 11px 22px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: .2s;
+    }
+
+    .save-btn:hover {
+        background: #4052c4;
+        color: white;
+    }
+
+    .info-box {
+        background: #f8f9fc;
+        border: 1px solid #edf0f4;
+        border-radius: 11px;
+        padding: 15px;
+    }
+
+    .info-box small {
+        color: #9299a5;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .info-box strong {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .security-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 17px 0;
+        border-bottom: 1px solid #edf0f4;
+        gap: 12px;
+    }
+
+    .security-item:last-child {
+        border-bottom: none;
+    }
+
+    .security-item h6 {
+        font-size: 14px;
+        font-weight: 650;
+        margin-bottom: 5px;
+    }
+
+    .security-item p {
+        font-size: 12px;
+        color: #9299a5;
+        margin: 0;
+    }
+
+    .security-link {
+        text-decoration: none;
+        color: #5365d9;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .security-link:hover {
+        color: #4052c4;
+    }
+
+    @media(max-width: 767px) {
+        .profile-page {
+            padding: 30px 0;
+        }
+
+        .profile-content {
+            padding: 22px 18px;
+        }
+
+        .profile-sidebar {
+            padding: 22px;
+        }
+    }
+</style>
+
+<section class="profile-page">
+    <div class="container">
+
+        <div class="profile-header">
+            <h2>My Account</h2>
+            <p>Manage your personal information and account settings.</p>
+        </div>
+
+        {% include "auth/_errors.html" %}
+
+        <div class="row g-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="profile-card profile-sidebar">
+
+                    <div class="profile-avatar">
+                        {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                        {% else %}
+                            {{ request.user.email|first|upper }}
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-name">
+                        {{ request.user.get_full_name|default:"Your Account" }}
+                    </div>
+
+                    <div class="profile-email">
+                        {{ request.user.email }}
+                    </div>
+
+                    <hr class="profile-divider">
+
+                    <nav class="profile-nav">
+                        <a href="#personal-info" class="active">
+                            <i class="bi bi-person"></i>
+                            Personal Information
+                        </a>
+
+                        <a href="#account-security">
+                            <i class="bi bi-shield-lock"></i>
+                            Account Security
+                        </a>
+
+                        <a href="{% url 'shop:home' %}">
+                            <i class="bi bi-house"></i>
+                            Back to Store
+                        </a>
+                    </nav>
+
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+
+                <!-- Personal Information -->
+                <div class="profile-card profile-content mb-4"
+                     id="personal-info">
+
+                    <h5 class="section-title">Personal Information</h5>
+
+                    <p class="section-description">
+                        Update your personal details and information.
+                    </p>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="first_name">
+                                    First Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control profile-input"
+                                    id="first_name"
+                                    name="first_name"
+                                    value="{{ request.user.first_name }}"
+                                    required
+                                >
+
+                                {% for error in errors.first_name %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="last_name">
+                                    Last Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control profile-input"
+                                    id="last_name"
+                                    name="last_name"
+                                    value="{{ request.user.last_name }}"
+                                    required
+                                >
+
+                                {% for error in errors.last_name %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="email">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control profile-input"
+                                    id="email"
+                                    value="{{ request.user.email }}"
+                                    disabled
+                                >
+
+                                <small class="text-muted">
+                                    To change your email address, visit account security.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <hr class="profile-divider">
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="save-btn">
+                                <i class="bi bi-check2 me-1"></i>
+                                Save Changes
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Account Information -->
+                <div class="profile-card profile-content mb-4">
+
+                    <h5 class="section-title">Account Overview</h5>
+
+                    <p class="section-description">
+                        Basic information about your account.
+                    </p>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <small>Refferal ID</small>
+                                <strong>#{{ request.user.id }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <small>Member Since</small>
+                                <strong>
+                                    {{ request.user.date_joined|date:"M d, Y" }}
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Account Security -->
+                <div class="profile-card profile-content"
+                     id="account-security">
+
+                    <h5 class="section-title">Account Security</h5>
+
+                    <p class="section-description">
+                        Manage your login credentials and account security.
+                    </p>
+
+                    <div class="security-item">
+                        <div>
+                            <h6>Email Address</h6>
+                            <p>Change your account email address.</p>
+                        </div>
+
+                        <a href="{% url 'shop:email_change' %}"
+                           class="security-link">
+                            Change Email <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="security-item">
+                        <div>
+                            <h6>Password</h6>
+                            <p>Update your password regularly.</p>
+                        </div>
+
+                        <a href="{% url 'shop:password_change' %}"
+                           class="security-link">
+                            Change Password <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
