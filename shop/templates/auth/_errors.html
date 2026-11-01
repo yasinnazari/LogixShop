@@ -1,0 +1,3 @@
+{% if errors.non_field %}
+   {% for error in errors.non_field %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+{% endif %}

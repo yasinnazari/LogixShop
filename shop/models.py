@@ -140,6 +140,36 @@ class LegacyInvoice(models.Model):
       return f"Legacy invoice {self.id}"
 
 
+class EmailVerificationChallenge(models.Model):
+   class Purpose(models.TextChoices):
+      REGISTRATION = 'REGISTRATION', 'Registration'
+      EMAIL_CHANGE = 'EMAIL_CHANGE', 'Email change'
+
+   user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_verification_challenges', on_delete=models.CASCADE)
+   code_digest = models.CharField(max_length=64)
+   purpose = models.CharField(max_length=32, choices=Purpose.choices)
+   target_email = models.EmailField(max_length=254, blank=True, default='')
+   expires_at = models.DateTimeField()
+   attempts = models.PositiveSmallIntegerField(default=0)
+   max_attempts = models.PositiveSmallIntegerField(default=5)
+   sent_at = models.DateTimeField(default=timezone.now)
+   consumed_at = models.DateTimeField(null=True, blank=True)
+   created_at = models.DateTimeField(auto_now_add=True)
+
+   class Meta:
+      indexes = [
+         models.Index(fields=('user', 'purpose', '-created_at'), name='email_challenge_user_idx'),
+         models.Index(fields=('expires_at',), name='email_challenge_expiry_idx'),
+      ]
+      constraints = [
+         models.CheckConstraint(condition=Q(max_attempts__gt=0), name='email_challenge_max_attempts_positive'),
+         models.CheckConstraint(condition=Q(attempts__lte=models.F('max_attempts')), name='email_challenge_attempts_valid'),
+      ]
+
+   def __str__(self):
+      return f'Email verification challenge {self.pk}'
+
+
 class Address(models.Model):
    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='addresses', on_delete=models.PROTECT)
    title = models.CharField(max_length=80)

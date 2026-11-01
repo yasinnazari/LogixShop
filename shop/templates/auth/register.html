@@ -1,0 +1,10 @@
+{% extends "main/base.html" %}
+{% block title %}LogixShop | Create account{% endblock %}
+{% block content %}<section class="py-5"><div class="container"><div class="col-md-6 mx-auto"><h1>Create account</h1>{% include "auth/_errors.html" %}
+<form method="post" novalidate>{% csrf_token %}
+<p><label>First name <input name="first_name" maxlength="150" required></label>{% for error in errors.first_name %}<span class="text-danger">{{ error }}</span>{% endfor %}</p>
+<p><label>Last name <input name="last_name" maxlength="150" required></label>{% for error in errors.last_name %}<span class="text-danger">{{ error }}</span>{% endfor %}</p>
+<p><label>Email <input type="email" name="email" maxlength="254" autocomplete="email" required></label>{% for error in errors.email %}<span class="text-danger">{{ error }}</span>{% endfor %}</p>
+<p><label>Password <input type="password" name="password" autocomplete="new-password" required></label>{% for error in errors.password %}<span class="text-danger">{{ error }}</span>{% endfor %}</p>
+<p><label>Confirm password <input type="password" name="password_confirmation" autocomplete="new-password" required></label>{% for error in errors.password_confirmation %}<span class="text-danger">{{ error }}</span>{% endfor %}</p>
+<button class="btn btn-primary" type="submit">Create account</button></form></div></div></section>{% endblock %}

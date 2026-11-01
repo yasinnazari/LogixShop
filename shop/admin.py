@@ -4,6 +4,7 @@ from .models import (
    Cart,
    CartItem,
    Category,
+   EmailVerificationChallenge,
    InventoryReservation,
    Invoice,
    InvoiceItem,
@@ -21,6 +22,24 @@ from .models import (
 
 class InvoiceAdmin(admin.ModelAdmin):
    list_display = ('invoice_number', 'order', 'status', 'document_type', 'total_amount', 'created_at')
+
+
+@admin.register(EmailVerificationChallenge)
+class EmailVerificationChallengeAdmin(admin.ModelAdmin):
+   list_display = ('id', 'user', 'purpose', 'target_email', 'expires_at', 'attempts', 'max_attempts', 'consumed_at', 'sent_at')
+   list_filter = ('purpose', 'consumed_at')
+   search_fields = ('user__username', 'user__email', 'target_email')
+   readonly_fields = ('user', 'purpose', 'target_email', 'expires_at', 'attempts', 'max_attempts', 'sent_at', 'consumed_at', 'created_at')
+   exclude = ('code_digest',)
+
+   def has_add_permission(self, request):
+      return False
+
+   def has_change_permission(self, request, obj=None):
+      return False
+
+   def has_delete_permission(self, request, obj=None):
+      return False
 
 
 admin.site.register(Product)

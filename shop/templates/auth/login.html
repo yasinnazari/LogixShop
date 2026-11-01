@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% block title %}LogixShop | Sign in{% endblock %}
+{% block content %}
+<section class="login-page"><div class="container"><div class="login-wrapper"><div class="login-card">
+   <div class="login-header"><span class="login-label">WELCOME</span><h1>SIGN IN</h1></div>
+   {% include "auth/_errors.html" %}
+   <form class="login-form" method="post" novalidate>
+      {% csrf_token %}<input type="hidden" name="next" value="{{ next_url }}">
+      <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required>{% for error in errors.email %}<div class="text-danger">{{ error }}</div>{% endfor %}</div>
+      <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="current-password" required>{% for error in errors.password %}<div class="text-danger">{{ error }}</div>{% endfor %}</div>
+      <button type="submit" class="login-btn mt-4">Sign in</button>
+   </form>
+   <p class="signup-text"><a href="{% url 'shop:password_reset' %}">Forgot password?</a></p>
+   <p class="signup-text">Don't have an account? <a href="{% url 'shop:register' %}">Create account</a></p>
+</div></div></div></section>
+{% endblock %}
