@@ -14,17 +14,20 @@ ROLE_PERMISSIONS = {
         'view_order', 'change_order', 'view_orderitem',
         'view_invoice', 'change_invoice', 'view_paymentattempt',
     ),
+
     'Product Creator': (
         'view_product', 'add_product', 'change_product',
         'view_category', 'add_category', 'change_category',
         'view_productimage', 'add_productimage', 'change_productimage',
     ),
+
     'Order Manager': (
         'view_order', 'change_order', 'view_orderitem', 'change_orderitem',
         'view_invoice', 'change_invoice', 'view_invoiceitem',
         'view_paymentattempt', 'change_paymentattempt',
         'view_refund', 'change_refund',
     ),
+
     'Support': ('view_order', 'view_orderitem', 'view_address'),
 }
 
@@ -35,6 +38,7 @@ security_logger = logging.getLogger('shop.security')
 def create_business_groups(sender, **kwargs):
     if sender.name != 'shop':
         return
+
     for group_name, codenames in ROLE_PERMISSIONS.items():
         group, _ = Group.objects.get_or_create(name=group_name)
         if codenames is None:
@@ -48,7 +52,9 @@ def create_business_groups(sender, **kwargs):
 def log_account_status_change(sender, instance, **kwargs):
     if not instance.pk:
         return
+
     previous = sender.objects.filter(pk=instance.pk).values('is_active').first()
+
     if previous and previous['is_active'] != instance.is_active:
         security_logger.info('security_event=account_status_changed user_id=%s', instance.pk)
 
