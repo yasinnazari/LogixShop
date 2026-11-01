@@ -1,6 +1,7 @@
 {% extends "main/base.html" %}
 {% block title %}LogixShop | Sign in{% endblock %}
 {% block content %}
+
 <section class="login-page"><div class="container"><div class="login-wrapper"><div class="login-card">
    <div class="login-header"><span class="login-label">WELCOME</span><h1>SIGN IN</h1></div>
    {% include "auth/_errors.html" %}
@@ -13,4 +14,5 @@
    <p class="signup-text"><a href="{% url 'shop:password_reset' %}">Forgot password?</a></p>
    <p class="signup-text">Don't have an account? <a href="{% url 'shop:register' %}">Create account</a></p>
 </div></div></div></section>
+
 {% endblock %}

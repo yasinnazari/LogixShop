@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
 
-{% block title %}My Account | LogixShop{% endblock %}
+{% block title %}Dashboard | LogixShop{% endblock %}
 
 {% block content %}
 
@@ -229,15 +229,14 @@
     <div class="container">
 
         <div class="profile-header">
-            <h2>My Account</h2>
-            <p>Manage your personal information and account settings.</p>
+            <h2>Dashboard</h2>
+            <p>Manage your personal information and account settings</p>
         </div>
 
         {% include "auth/_errors.html" %}
 
         <div class="row g-4">
 
-            <!-- Sidebar -->
             <div class="col-lg-3">
                 <div class="profile-card profile-sidebar">
 
@@ -279,10 +278,7 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="col-lg-9">
-
-                <!-- Personal Information -->
                 <div class="profile-card profile-content mb-4"
                      id="personal-info">
 
