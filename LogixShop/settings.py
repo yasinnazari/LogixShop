@@ -18,7 +18,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'true').lower() in {'1', 'true', 'yes', 'on'}
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 if not SECRET_KEY:
     if not DEBUG:
-        raise ImproperlyConfigured('DJANGO_SECRET_KEY must be set when DEBUG is false.')
+        raise ImproperlyConfigured('DJANGO_SECRET_KEY must be set when DEBUG is False')
     SECRET_KEY = 'django-insecure-development-only-change-me'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -126,6 +126,7 @@ LOGIN_URL = 'shop:login'
 LOGIN_REDIRECT_URL = 'shop:home'
 
 EMAIL_OTP_HMAC_SECRET = os.getenv('EMAIL_OTP_HMAC_SECRET')
+
 if not EMAIL_OTP_HMAC_SECRET:
     if not DEBUG:
         raise ImproperlyConfigured('EMAIL_OTP_HMAC_SECRET must be set when DEBUG is false.')

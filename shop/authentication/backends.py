@@ -16,8 +16,10 @@ class EmailAuthenticationBackend(ModelBackend):
 
         normalized_email = normalize_email(candidate)
         UserModel = get_user_model()
+
         try:
             user = UserModel._default_manager.get(email__iexact=normalized_email)
+
         except UserModel.DoesNotExist:
             # Match Django's password-hash timing behavior for unknown users.
             UserModel().set_password(password)
@@ -25,4 +27,5 @@ class EmailAuthenticationBackend(ModelBackend):
 
         if user.check_password(password) and self.user_can_authenticate(user):
             return user
+
         return None
