@@ -1,19 +1,20 @@
+from pydantic import ValidationError as PydanticValidationError
+
 from django.conf import settings
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 from django.contrib.auth.views import PasswordResetConfirmView
-from pydantic import ValidationError as PydanticValidationError
 
 from shop.models import EmailVerificationChallenge
-
 from .rate_limits import is_rate_limited
 from .schemas import (
     EmailChangeSchema,
@@ -49,30 +50,33 @@ def _payload(request):
 def _validate(schema, request):
     try:
         return schema.model_validate(_payload(request)), {}
+
     except PydanticValidationError as exc:
         errors = {}
+
         for error in exc.errors():
             field = str(error['loc'][0]) if error['loc'] else '__all__'
             errors.setdefault(field, []).append(error['msg'])
+
         return None, errors
 
 
 def _render(request, template_name, *, errors=None, status=200, **context):
     normalized_errors = {}
+
     for field, messages_for_field in (errors or {}).items():
         key = 'non_field' if field == '__all__' else field
         normalized_errors[key] = list(messages_for_field)
+
     return render(request, template_name, {'errors': normalized_errors, **context}, status=status)
 
 
 def _safe_next_url(request):
     candidate = request.POST.get('next') or request.GET.get('next')
-    if candidate and url_has_allowed_host_and_scheme(
-        candidate,
-        allowed_hosts={request.get_host()},
-        require_https=not settings.DEBUG,
-    ):
+
+    if candidate and url_has_allowed_host_and_scheme(candidate, allowed_hosts={request.get_host()}, require_https=not settings.DEBUG):
         return candidate
+
     return settings.LOGIN_REDIRECT_URL
 
 
@@ -83,6 +87,7 @@ def _throttled(request, *, scope, email, limit, window):
             'auth/rate_limited.html',
             status=429,
         )
+
     return None
 
 
@@ -96,12 +101,13 @@ def register(request):
     payload, errors = _validate(RegistrationSchema, request)
     if errors:
         return _render(request, 'auth/register.html', errors=errors, status=400)
+
     if throttled := _throttled(request, scope='registration', email=payload.email, limit=5, window=3600):
         return throttled
 
     password = payload.password.get_secret_value()
-    from django.contrib.auth import get_user_model
     candidate_user = get_user_model()(email=payload.email, first_name=payload.first_name, last_name=payload.last_name)
+
     try:
         validate_password(password, candidate_user)
         user = create_unverified_user(
@@ -110,20 +116,27 @@ def register(request):
             last_name=payload.last_name,
             password=password,
         )
+
         issue_email_challenge(user=user, purpose=EmailVerificationChallenge.Purpose.REGISTRATION)
+
     except ValidationError as exc:
         return _render(request, 'auth/register.html', errors={'password': list(exc.messages)}, status=400)
+
     except EmailAlreadyRegistered:
         log_security_event('registration_existing_email', request, email=payload.email)
         messages.success(request, 'If this email can be registered, verification instructions will be sent.')
+
         return redirect('shop:resend_verification')
+
     except EmailDeliveryError:
         log_security_event('registration_email_delivery_failed', request, email=payload.email)
         messages.error(request, 'We could not send a verification code. Please use resend verification.')
+
         return redirect('shop:resend_verification')
 
     log_security_event('registration_created', request, user=user, email=user.email)
     messages.success(request, 'Check your email for a six-digit verification code.')
+
     return redirect(f"{reverse('shop:verify_email')}?email={payload.email}")
 
 
@@ -135,14 +148,17 @@ def verify_email(request):
     payload, errors = _validate(EmailVerificationSchema, request)
     if errors:
         return _render(request, 'auth/verify_email.html', errors=errors, status=400)
+
     if throttled := _throttled(request, scope='verify-email', email=payload.email, limit=10, window=300):
         return throttled
+
     try:
         user = verify_email_challenge(
             email=payload.email,
             code=payload.code.get_secret_value(),
             purpose=EmailVerificationChallenge.Purpose.REGISTRATION,
         )
+
     except ChallengeError:
         log_security_event('email_verification_failed', request, email=payload.email)
         return _render(request, 'auth/verify_email.html', errors={'code': ['The code is invalid or expired.']}, status=400)
@@ -150,6 +166,7 @@ def verify_email(request):
     login(request, user)
     log_security_event('email_verified', request, user=user, email=user.email)
     messages.success(request, 'Your email has been verified.')
+
     return redirect(_safe_next_url(request))
 
 
@@ -161,18 +178,21 @@ def resend_verification(request):
     payload, errors = _validate(ResendVerificationSchema, request)
     if errors:
         return _render(request, 'auth/resend_verification.html', errors=errors, status=400)
+
     if throttled := _throttled(request, scope='resend-verification', email=payload.email, limit=5, window=3600):
         return throttled
 
-    from django.contrib.auth import get_user_model
     user = get_user_model().objects.filter(email__iexact=payload.email, is_active=False).first()
     if user:
         try:
             issue_email_challenge(user=user, purpose=EmailVerificationChallenge.Purpose.REGISTRATION)
             log_security_event('email_verification_resent', request, user=user, email=user.email)
+
         except (ChallengeCooldown, EmailDeliveryError):
             pass
-    messages.success(request, 'If an eligible account exists, a verification email will be sent shortly.')
+
+    messages.success(request, 'If an account exists, a Verification Email will be sent soon')
+
     return redirect('shop:verify_email')
 
 
@@ -180,10 +200,12 @@ def resend_verification(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('shop:home')
+
     if request.method == 'GET':
         return _render(request, 'auth/login.html', next_url=request.GET.get('next', ''))
 
     payload, errors = _validate(LoginSchema, request)
+
     if errors:
         return _render(request, 'auth/login.html', errors=errors, next_url=request.POST.get('next', ''), status=400)
     if throttled := _throttled(request, scope='login', email=payload.email, limit=5, window=900):
@@ -339,7 +361,6 @@ def email_change(request):
         return _render(request, 'auth/email_change.html', errors={'current_password': ['Current password is incorrect.']}, status=400)
     if payload.email == request.user.email.lower():
         return _render(request, 'auth/email_change.html', errors={'email': ['Enter a different email address.']}, status=400)
-    from django.contrib.auth import get_user_model
     if get_user_model().objects.filter(email__iexact=payload.email).exclude(pk=request.user.pk).exists():
         return _render(request, 'auth/email_change.html', errors={'email': ['This email address cannot be used.']}, status=400)
     if throttled := _throttled(request, scope='email-change', email=payload.email, limit=3, window=3600):
@@ -364,11 +385,14 @@ def email_change(request):
 def verify_email_change(request):
     if request.method == 'GET':
         return _render(request, 'auth/verify_email_change.html', email=request.GET.get('email', ''))
+
     payload, errors = _validate(EmailVerificationSchema, request)
     if errors:
         return _render(request, 'auth/verify_email_change.html', errors=errors, status=400)
+
     if throttled := _throttled(request, scope='verify-email-change', email=payload.email, limit=10, window=300):
         return throttled
+
     try:
         user = verify_email_challenge(
             email=payload.email,
@@ -376,9 +400,12 @@ def verify_email_change(request):
             purpose=EmailVerificationChallenge.Purpose.EMAIL_CHANGE,
             user=request.user,
         )
+
     except ChallengeError:
         log_security_event('email_change_verification_failed', request, user=request.user, email=payload.email)
         return _render(request, 'auth/verify_email_change.html', errors={'code': ['The code is invalid or expired.']}, status=400)
+
     log_security_event('email_changed', request, user=user, email=user.email)
     messages.success(request, 'Your email address has been changed.')
+
     return redirect('shop:dashboard')
