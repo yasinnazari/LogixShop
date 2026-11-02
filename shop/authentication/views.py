@@ -260,7 +260,7 @@ def password_change(request):
     update_session_auth_hash(request, user)
     log_security_event('password_changed', request, user=user, email=user.email)
     messages.success(request, 'Your password has been changed.')
-    return redirect('shop:profile')
+    return redirect('shop:dashboard')
 
 
 class ValidatedPasswordResetConfirmView(PasswordResetConfirmView):
@@ -286,24 +286,45 @@ class ValidatedPasswordResetConfirmView(PasswordResetConfirmView):
 
 @require_http_methods(['GET', 'POST'])
 @login_required
-def profile(request):
+def dashboard(request):
     if request.method == 'GET':
-        return _render(request, 'auth/profile.html')
+        return _render(request, 'auth/dashboard.html')
+
     payload, errors = _validate(ProfileUpdateSchema, request)
+
     if errors:
-        return _render(request, 'auth/profile.html', errors=errors, status=400)
+        return _render(request, 'auth/dashboard.html', errors=errors, status=400)
+
     if payload.phone_number:
         return _render(
             request,
-            'auth/profile.html',
+            'auth/dashboard.html',
             errors={'phone_number': ['Phone numbers are collected with an address or checkout, not on the account.']},
             status=400,
         )
+
     request.user.first_name = payload.first_name
     request.user.last_name = payload.last_name
     request.user.save(update_fields=['first_name', 'last_name'])
-    messages.success(request, 'Your profile has been updated.')
-    return redirect('shop:profile')
+
+    messages.success(request, 'Your profile has been updated')
+    return redirect('shop:dashboard')
+
+
+@require_http_methods(['GET', 'POST'])
+@login_required
+def account_security(request):
+    if request.method == 'GET':
+        return _render(request, 'auth/account_security.html')
+
+    return _render(
+        request,
+        'auth/dashboard.html',
+        errors={'phone_number': ['Phone numbers are collected with an address or checkout, not on the account.']},
+        status=400,
+        redirect="shop:account_security"
+    )
+
 
 
 @require_http_methods(['GET', 'POST'])
@@ -360,4 +381,4 @@ def verify_email_change(request):
         return _render(request, 'auth/verify_email_change.html', errors={'code': ['The code is invalid or expired.']}, status=400)
     log_security_event('email_changed', request, user=user, email=user.email)
     messages.success(request, 'Your email address has been changed.')
-    return redirect('shop:profile')
+    return redirect('shop:dashboard')

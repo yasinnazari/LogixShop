@@ -259,7 +259,7 @@
                             Personal Information
                         </a>
 
-                        <a href="#account-security">
+                        <a href="/dashboard/account_security">
                             <i class="bi bi-shield-lock"></i>
                             Account Security
                         </a>
@@ -389,43 +389,6 @@
 
                 </div>
 
-                <!-- Account Security -->
-                <div class="profile-card profile-content"
-                     id="account-security">
-
-                    <h5 class="section-title">Account Security</h5>
-
-                    <p class="section-description">
-                        Manage your login credentials and account security.
-                    </p>
-
-                    <div class="security-item">
-                        <div>
-                            <h6>Email Address</h6>
-                            <p>Change your account email address.</p>
-                        </div>
-
-                        <a href="{% url 'shop:email_change' %}"
-                           class="security-link">
-                            Change Email <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-
-                    <div class="security-item">
-                        <div>
-                            <h6>Password</h6>
-                            <p>Update your password regularly.</p>
-                        </div>
-
-                        <a href="{% url 'shop:password_change' %}"
-                           class="security-link">
-                            Change Password <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
         </div>
     </div>
 </section>

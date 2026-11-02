@@ -27,7 +27,8 @@ urlpatterns = [
       name='password_reset_complete',
    ),
 
-   path('profile/', authentication_views.profile, name='profile'),
+   path('dashboard/', authentication_views.dashboard, name='dashboard'),
+   path('dashboard/account_security', authentication_views.account_security, name='account_security'),
 
    path('email/change/', authentication_views.email_change, name='email_change'),
    path('email/change/verify/', authentication_views.verify_email_change, name='verify_email_change'),

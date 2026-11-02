@@ -41,7 +41,7 @@
                </button>
 
                {% if request.user.is_authenticated %}
-                  <a href="{% url 'shop:profile' %}" class="sign-btn"><i class="bi bi-person"></i> Account</a>
+                  <a href="{% url 'shop:dashboard' %}" class="sign-btn"><i class="bi bi-person"></i> Account</a>
                   <form method="post" action="{% url 'shop:logout' %}">
                      {% csrf_token %}
                      <button type="submit" class="sign-btn danger">Sign out</button>

@@ -123,7 +123,7 @@ PASSWORD_HASHERS = [
 
 AUTHENTICATION_BACKENDS = ['shop.authentication.backends.EmailAuthenticationBackend']
 LOGIN_URL = 'shop:login'
-LOGIN_REDIRECT_URL = 'shop:home'
+LOGIN_REDIRECT_URL = 'shop:dashboard'
 
 EMAIL_OTP_HMAC_SECRET = os.getenv('EMAIL_OTP_HMAC_SECRET')
 
