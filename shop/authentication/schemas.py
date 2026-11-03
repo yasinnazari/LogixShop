@@ -1,5 +1,6 @@
 import re
 
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.validators import validate_email
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
 
@@ -18,7 +19,10 @@ class EmailSchema(InputSchema):
     @classmethod
     def normalize_and_validate_email(cls, value):
         normalized = value.strip().lower()
-        validate_email(normalized)
+        try:
+            validate_email(normalized)
+        except DjangoValidationError as exc:
+            raise ValueError('Enter a valid email address.') from exc
         return normalized
 
 

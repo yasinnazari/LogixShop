@@ -129,7 +129,8 @@ EMAIL_OTP_HMAC_SECRET = os.getenv('EMAIL_OTP_HMAC_SECRET')
 
 if not EMAIL_OTP_HMAC_SECRET:
     if not DEBUG:
-        raise ImproperlyConfigured('EMAIL_OTP_HMAC_SECRET must be set when DEBUG is false.')
+        raise ImproperlyConfigured('EMAIL_OTP_HMAC_SECRET must be set when DEBUG is False')
+
     EMAIL_OTP_HMAC_SECRET = f'{SECRET_KEY}:development-email-otp'
 
 EMAIL_BACKEND = os.getenv(
@@ -137,10 +138,10 @@ EMAIL_BACKEND = os.getenv(
     'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend',
 )
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'no-reply@logixshop.local')
-EMAIL_HOST = os.getenv('EMAIL_HOST', '')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'LogixShop')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'true').lower() in {'1', 'true', 'yes', 'on'}
 

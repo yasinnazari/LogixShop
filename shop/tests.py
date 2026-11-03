@@ -226,6 +226,11 @@ class AuthenticationTests(TestCase):
       challenge = EmailVerificationChallenge.objects.get(user=user)
       self.assertNotIn(self._code(), challenge.code_digest)
 
+   def test_registration_invalid_email_returns_form_error_instead_of_server_error(self):
+      response = self._register(email='not-an-email')
+      self.assertEqual(response.status_code, 400)
+      self.assertContains(response, 'Enter a valid email address.', status_code=400)
+
    def test_registration_rejects_case_insensitive_duplicate_email(self):
       self._active_user('Ada@Example.com')
       response = self._register(email='ada@example.com')

@@ -56,6 +56,7 @@ def create_unverified_user(*, email, first_name, last_name, password):
                 password=password,
                 is_active=False,
             )
+
             return user
     except IntegrityError as exc:
         # The PostgreSQL expression index is the final authority under races.
