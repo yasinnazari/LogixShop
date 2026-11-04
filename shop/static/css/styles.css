@@ -550,7 +550,6 @@ a {
 .product-info h5 {
   margin-top: 6px;
   margin-bottom: 10px;
-
   font-size: 16px;
   font-weight: 700;
 }
@@ -647,9 +646,7 @@ footer {
 
 .footer-description {
   max-width: 350px;
-
   margin-top: 20px;
-
   color: #888;
   line-height: 1.7;
 }
@@ -662,18 +659,13 @@ footer {
 .socials a {
   width: 40px;
   height: 40px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: #222;
-
   color: white;
   text-decoration: none;
-
   transition: 0.2s;
 }
 
@@ -707,14 +699,10 @@ footer .col-lg-2 a:hover {
 .footer-bottom {
   display: flex;
   justify-content: space-between;
-
   margin-top: 70px;
   padding-top: 25px;
-
   border-top: 1px solid #292929;
-
   color: #666;
-
   font-size: 12px;
 }
 
