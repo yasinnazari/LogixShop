@@ -217,7 +217,7 @@ def login_view(request):
         return _render(
             request,
             'auth/login.html',
-            errors={'__all__': ['Invalid email or password, or the account is not verified.']},
+            errors={'__all__': ['Invalid email or password']},
             next_url=request.POST.get('next', ''),
             status=400,
         )
@@ -230,9 +230,12 @@ def login_view(request):
 @login_required
 def logout_view(request):
     user = request.user
+
     logout(request)
     log_security_event('logout', request, user=user, email=user.email)
-    messages.success(request, 'You have been signed out.')
+
+    messages.success(request, 'You have been signed out')
+
     return redirect('shop:login')
 
 
