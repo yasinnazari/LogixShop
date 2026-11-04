@@ -214,6 +214,7 @@ def login_view(request):
     user = authenticate(request, email=payload.email, password=payload.password.get_secret_value())
     if user is None:
         log_security_event('login_failed', request, email=payload.email)
+
         return _render(
             request,
             'auth/login.html',
@@ -221,8 +222,10 @@ def login_view(request):
             next_url=request.POST.get('next', ''),
             status=400,
         )
+
     login(request, user)
     log_security_event('login_succeeded', request, user=user, email=user.email)
+
     return redirect(_safe_next_url(request))
 
 
@@ -243,7 +246,9 @@ def logout_view(request):
 def password_reset_request(request):
     if request.method == 'GET':
         return _render(request, 'auth/password_reset.html')
+
     payload, errors = _validate(ForgotPasswordSchema, request)
+
     if errors:
         return _render(request, 'auth/password_reset.html', errors=errors, status=400)
     if throttled := _throttled(request, scope='password-reset', email=payload.email, limit=5, window=3600):
@@ -258,8 +263,10 @@ def password_reset_request(request):
             email_template_name='auth/password_reset_email.txt',
             subject_template_name='auth/password_reset_subject.txt',
         )
+
     log_security_event('password_reset_requested', request, email=payload.email)
-    messages.success(request, 'If an eligible account exists, password reset instructions will be sent.')
+    messages.success(request, 'If an account exists, a reset link has been sent')
+
     return redirect('shop:login')
 
 
@@ -268,9 +275,12 @@ def password_reset_request(request):
 def password_change(request):
     if request.method == 'GET':
         return _render(request, 'auth/password_change.html')
+
     payload, errors = _validate(PasswordChangeSchema, request)
+
     if errors:
         return _render(request, 'auth/password_change.html', errors=errors, status=400)
+
     form = PasswordChangeForm(
         request.user,
         {
@@ -279,12 +289,16 @@ def password_change(request):
             'new_password2': payload.new_password2.get_secret_value(),
         },
     )
+
     if not form.is_valid():
         return _render(request, 'auth/password_change.html', errors=form.errors, status=400)
+
     user = form.save()
     update_session_auth_hash(request, user)
     log_security_event('password_changed', request, user=user, email=user.email)
-    messages.success(request, 'Your password has been changed.')
+ 
+    messages.success(request, 'Your password has been changed')
+
     return redirect('shop:dashboard')
 
 
