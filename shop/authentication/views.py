@@ -82,11 +82,7 @@ def _safe_next_url(request):
 
 def _throttled(request, *, scope, email, limit, window):
     if is_rate_limited(request, scope=scope, identifier=email, limit=limit, window_seconds=window):
-        return _render(
-            request,
-            'auth/rate_limited.html',
-            status=429,
-        )
+        return _render(request, 'auth/rate_limited.html', status=429)
 
     return None
 
