@@ -9,7 +9,7 @@ def normalize_email(value):
 class EmailAuthenticationBackend(ModelBackend):
     """Authenticate only against a normalized email address."""
 
-    def authenticate(self, request, username=None, password=None, email=None, **kwargs):
+    def authenticate(self, request,  email=None, username=None, password=None, **kwargs):
         candidate = email if email is not None else username
         if not candidate or password is None:
             return None
