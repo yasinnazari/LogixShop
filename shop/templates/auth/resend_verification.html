@@ -1,3 +1,24 @@
 {% extends "main/base.html" %}
+
 {% block title %}Resend verification{% endblock %}
-{% block content %}<section class="py-5"><div class="container col-md-5"><h1>Resend verification code</h1>{% include "auth/_errors.html" %}<form method="post" novalidate>{% csrf_token %}<p><label>Email <input type="email" name="email" required></label>{% for error in errors.email %}<span class="text-danger">{{ error }}</span>{% endfor %}</p><button class="btn btn-primary">Send code</button></form></div></section>{% endblock %}
+
+{% block content %}
+<section class="py-5">
+   <div class="container col-md-5">
+      <h1>Resend verification code</h1>
+      {% include "auth/_errors.html" %}
+
+      <form method="post" novalidate>
+         {% csrf_token %}
+         <p>
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required>
+            {% for error in errors.email %}
+               <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+         </p>
+         <button class="btn btn-primary" type="submit">Send code</button>
+      </form>
+   </div>
+</section>
+{% endblock %}

@@ -27,18 +27,6 @@
 }
 
 
-.about-description {
-   max-width: 540px;
-
-   margin-top: 25px;
-
-   font-size: 17px;
-   line-height: 1.8;
-
-   color: #777;
-}
-
-
 .about-actions {
    margin-top: 35px;
 }
@@ -97,69 +85,6 @@ IMAGE
    object-fit: cover;
 
    border-radius: 30px;
-}
-
-
-.about-floating-card {
-   position: absolute;
-
-   left: -25px;
-   bottom: 40px;
-
-   display: flex;
-
-   align-items: center;
-   gap: 15px;
-
-   padding: 17px 20px;
-
-   border: 1px solid rgba(255, 255, 255, 0.6);
-
-   border-radius: 18px;
-
-   background: rgba(255, 255, 255, 0.7);
-
-   backdrop-filter: blur(15px);
-   -webkit-backdrop-filter: blur(15px);
-
-   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
-
-
-.about-card-icon {
-   width: 45px;
-   height: 45px;
-
-   display: flex;
-
-   align-items: center;
-   justify-content: center;
-
-   border-radius: 14px;
-
-   background: rgba(66, 70, 232, 0.1);
-
-   color: var(--accent);
-
-   font-size: 20px;
-}
-
-
-.about-floating-card strong {
-   display: block;
-
-   font-size: 14px;
-}
-
-
-.about-floating-card span {
-   display: block;
-
-   margin-top: 3px;
-
-   font-size: 12px;
-
-   color: #777;
 }
 
 
@@ -408,10 +333,6 @@ RESPONSIVE
       height: 500px;
    }
 
-   .about-floating-card {
-      left: 20px;
-   }
-
 }
 
 
@@ -423,13 +344,6 @@ RESPONSIVE
 
    .about-image-wrapper img {
       height: 400px;
-   }
-
-   .about-floating-card {
-      left: 15px;
-      bottom: 20px;
-
-      padding: 14px;
    }
 
    .about-value-card {

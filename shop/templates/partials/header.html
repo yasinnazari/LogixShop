@@ -43,7 +43,7 @@
 
                {% if request.user.is_authenticated %}
                   <a href="{% url 'shop:dashboard' %}" class="sign-btn"><i class="bi bi-person"></i> Account</a>
-                  <form method="post" action="{% url 'shop:logout' %}">
+                  <form class="d-inline" method="post" action="{% url 'shop:logout' %}">
                      {% csrf_token %}
                      <button type="submit" class="sign-btn danger">Sign out</button>
                   </form>

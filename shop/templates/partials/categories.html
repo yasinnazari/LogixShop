@@ -2,7 +2,6 @@
    <div class="container">
 
       <div class="section-heading">
-
          <div>
             <span class="section-label">EXPLORE</span>
             <h2>CATEGORIES</h2>
@@ -14,24 +13,19 @@
 
       </div>
 
-
       <div class="row g-5">
-         {% for category in categories|slice:":4"  %}
-
+         {% for category in categories|slice:":4" %}
             <div class="col-6 col-lg-6">
+               <a class="category-card" href="#">
+                  <div class="category-image">
+                     <img src="{{ category.category_image.url }}" alt="{{ category.title }}">
+                  </div>
 
-                  <a class="category-card" href="#">
-                     <div class="category-image">
-                        <img src="./media/{{ category.category_image }}">
-                     </div>
-
-                     <div class="category-content mt-3">
-                        <h4>{{ category.title }}</h4>
-                     </div>
-                  </a>
-
+                  <div class="category-content mt-3">
+                     <h4>{{ category.title }}</h4>
+                  </div>
+               </a>
             </div>
-
          {% endfor %}
       </div>
 

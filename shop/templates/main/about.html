@@ -5,6 +5,10 @@
     LogixShop | About Us
 {% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock extra_css %}
+
 {% block content %}
 
 <section class="about-hero">
@@ -56,7 +60,8 @@
                     ABOUT
                 </span>
 
-                <h2 class="about-section-title"><span>LOGIXSHOP<span></h2><h2 class="about-section-title">STORY</h2>
+                <h2 class="about-section-title"><span>LOGIXSHOP</span></h2>
+                <h2 class="about-section-title">STORY</h2>
 
                 <p class="about-text">
                     LogixShop is my first Django project, built as a way to turn what
@@ -80,7 +85,7 @@
     
     <div class="container">
         <div class="row g-4">
-            <center><h3 class="">What's this shop points ?</h3></center>
+            <h3 class="text-center">What are this shop's values?</h3>
             <div class="col-md-4">
                 <div class="about-value-card">
                     <div class="value-icon">
