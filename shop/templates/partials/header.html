@@ -1,8 +1,10 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
    <div class="container py-2">
 
-      <a class="navbar-brand fw-bold fs-3" href="/">
-         LOGIX<span class="brand-dot">SHOP</span>
+      <a class="navbar-brand" href="/" aria-label="LogixShop home">
+         <img class="navbar-logo" src="{% static 'assets/LogixWithoutBg.png' %}" alt="LogixShop">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">

@@ -79,8 +79,18 @@ a {
 }
 
 .navbar-brand {
-  letter-spacing: -1px;
-  color: var(--black) !important;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.navbar-logo {
+  display: block;
+  width: 140px;
+  height: 50px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .brand-dot, .footer-brand span {
@@ -95,6 +105,13 @@ a {
 
 .nav-link:hover, .nav-link.active {
   color: var(--black) !important;
+}
+
+@media (max-width: 575.98px) {
+  .navbar-logo {
+    width: 132px;
+    height: 34px;
+  }
 }
 
 .icon-btn {
