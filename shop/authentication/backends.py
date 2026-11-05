@@ -23,6 +23,7 @@ class EmailAuthenticationBackend(ModelBackend):
         except UserModel.DoesNotExist:
             # Match Django's password-hash timing behavior for unknown users.
             UserModel().set_password(password)
+
             return None
 
         if user.check_password(password) and self.user_can_authenticate(user):
