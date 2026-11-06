@@ -1,0 +1,13 @@
+<div class="alert {{ notification_class }} site-notification notification--{{ notification_type }}"
+     data-notification data-notification-duration="15000" role="alert">
+   <div class="notification-content">
+      <i class="bi {{ notification_icon }}" aria-hidden="true"></i>
+      <span>{{ message }}</span>
+   </div>
+
+   <button class="notification-close" type="button" data-notification-close aria-label="Dismiss notification">
+      <i class="bi bi-x-lg" aria-hidden="true"></i>
+   </button>
+
+   <span class="notification-progress" aria-hidden="true"></span>
+</div>

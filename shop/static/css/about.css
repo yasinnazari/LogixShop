@@ -6,16 +6,11 @@
 
 .about-title {
    max-width: 650px;
-
    margin-top: 20px;
-
    font-size: clamp(3.2rem, 6vw, 6rem);
    line-height: 0.98;
-
    font-weight: 800;
-
    letter-spacing: -4px;
-
    color: #111;
 }
 
@@ -34,42 +29,29 @@
 
 .about-btn {
    display: inline-flex;
-
    align-items: center;
    gap: 10px;
-
    padding: 14px 22px;
-
    border-radius: 50px;
-
    background: var(--accent);
    color: #fff;
-
    font-size: 14px;
    font-weight: 600;
-
    text-decoration: none;
-
    box-shadow: 0 10px 25px rgba(66, 70, 232, 0.2);
-
    transition: 0.25s ease;
 }
 
 
 .about-btn:hover {
    transform: translateY(-2px);
-
    background: #3438d4;
-
    color: #fff;
-
    box-shadow: 0 15px 30px rgba(66, 70, 232, 0.3);
 }
 
 
-/* =========================
-IMAGE
-========================= */
+/* ================== IMAGE =================== */
 
 .about-image-wrapper {
    position: relative;
@@ -79,11 +61,8 @@ IMAGE
 .about-image-wrapper img {
    width: 100%;
    height: 580px;
-
    display: block;
-
    object-fit: cover;
-
    border-radius: 30px;
 }
 
@@ -99,24 +78,17 @@ STORY
 
 .about-section-title {
    margin-top: 15px;
-
    font-size: clamp(2.3rem, 4vw, 4rem);
-
    font-weight: 800;
-
    letter-spacing: -2px;
-
    line-height: 1.05;
 }
 
 
 .about-text {
    margin-top: 25px;
-
    font-size: 17px;
-
    line-height: 1.9;
-
    color: #777;
 }
 
@@ -132,24 +104,17 @@ VALUES
 
 .about-value-card {
    height: 100%;
-
    padding: 35px;
-
    border: 1px solid #eee;
-
    border-radius: 24px;
-
    background: #fff;
-
    transition: 0.3s ease;
 }
 
 
 .about-value-card:hover {
    transform: translateY(-7px);
-
    border-color: rgba(66, 70, 232, 0.2);
-
    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.07);
 }
 
@@ -157,38 +122,27 @@ VALUES
 .value-icon {
    width: 52px;
    height: 52px;
-
    display: flex;
-
    align-items: center;
    justify-content: center;
-
    margin-bottom: 25px;
-
    border-radius: 16px;
-
    background: rgba(66, 70, 232, 0.1);
-
    color: var(--accent);
-
    font-size: 22px;
 }
 
 
 .about-value-card h4 {
    font-weight: 700;
-
    margin-bottom: 12px;
 }
 
 
 .about-value-card p {
    margin: 0;
-
    color: #777;
-
    line-height: 1.7;
-
    font-size: 14px;
 }
 
@@ -204,9 +158,7 @@ STATS
 
 .about-stats-box {
    padding: 55px 30px;
-
    border-radius: 30px;
-
    background: #f4f5ff;
 }
 
@@ -218,24 +170,17 @@ STATS
 
 .about-stat strong {
    display: block;
-
    color: var(--accent);
-
    font-size: 38px;
-
    font-weight: 800;
-
    letter-spacing: -1px;
 }
 
 
 .about-stat span {
    display: block;
-
    margin-top: 5px;
-
    color: #777;
-
    font-size: 14px;
 }
 
@@ -264,57 +209,39 @@ CTA
 
 .about-cta-box h2 {
    margin-top: 15px;
-
    font-size: clamp(2.5rem, 5vw, 4.5rem);
-
    font-weight: 800;
-
    letter-spacing: -3px;
-
    line-height: 1;
 }
 
 
 .about-cta-box p {
    max-width: 500px;
-
    margin: 25px auto;
-
    color: #aaa;
-
    font-size: 16px;
 }
 
 
 .about-cta-btn {
    display: inline-flex;
-
    align-items: center;
    gap: 10px;
-
    padding: 14px 24px;
-
    border-radius: 50px;
-
    background: var(--accent);
-
    color: #fff;
-
    text-decoration: none;
-
    font-size: 14px;
-
    font-weight: 600;
-
    transition: 0.25s ease;
 }
 
 
 .about-cta-btn:hover {
    transform: translateY(-2px);
-
    color: #fff;
-
    box-shadow: 0 12px 25px rgba(66, 70, 232, 0.35);
 }
 

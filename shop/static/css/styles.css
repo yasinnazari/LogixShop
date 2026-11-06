@@ -31,6 +31,149 @@ a {
   text-decoration: none;
 }
 
+/* ================= NOTIFICATIONS ================= */
+
+.site-notifications {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1080;
+  width: min(420px, calc(100vw - 2rem));
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.site-notifications .site-notification {
+  pointer-events: auto;
+}
+
+@media (max-width: 575.98px) {
+  .site-notifications {
+    right: 16px;
+    bottom: 16px;
+    width: calc(100vw - 2rem);
+  }
+}
+
+.site-notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+  margin-bottom: 0;
+  padding: 14px 44px 16px 16px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.08);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.notification-content span {
+  overflow-wrap: anywhere;
+}
+
+.notification-content > i {
+  flex: 0 0 auto;
+  font-size: 16px;
+}
+
+.notification-close {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  opacity: 0.65;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.notification-close:hover,
+.notification-close:focus-visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.notification-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: currentColor;
+  opacity: 0.45;
+  transform-origin: left center;
+  animation: notification-progress var(--notification-duration, 15000ms) linear forwards;
+}
+
+.notification--success .notification-progress {
+  color: #146c43;
+}
+
+.notification--error .notification-progress {
+  color: #b02a37;
+}
+
+.notification--warning .notification-progress {
+  color: #997404;
+}
+
+.notification--info .notification-progress {
+  color: #087990;
+}
+
+.site-notification.is-dismissing {
+  animation: notification-dismiss 0.35s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes notification-progress {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes notification-dismiss {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    height: 0;
+    min-height: 0;
+    margin-top: -12px;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
 /* ================= SIGN ================= */
 .sign-btn {
   display: inline-flex;
