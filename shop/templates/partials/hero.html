@@ -1,12 +1,16 @@
 {% load static %}
 
+{% block extra_css %}
+   <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock extra_css %}
+
 <section class="hero">
    <div class="container">
       <div class="row align-items-center">
 
          <div class="col-lg-6">
 
-            <span class="hero-label">LOGIX COMMUNITY</span>
+            <span class="login-label">LOGIX COMMUNITY</span>
 
             <h1 class="hero-heading">
                Click. Buy. <span>Done.</span>
