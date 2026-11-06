@@ -208,6 +208,7 @@ def login_view(request):
         return throttled
 
     user = authenticate(request, email=payload.email, password=payload.password.get_secret_value())
+
     if user is None:
         log_security_event('login_failed', request, email=payload.email)
 
@@ -369,28 +370,39 @@ def email_change(request):
     if request.method == 'GET':
         return _render(request, 'auth/email_change.html')
     payload, errors = _validate(EmailChangeSchema, request)
+
     if errors:
         return _render(request, 'auth/email_change.html', errors=errors, status=400)
+
     if not request.user.check_password(payload.current_password.get_secret_value()):
         return _render(request, 'auth/email_change.html', errors={'current_password': ['Current password is incorrect.']}, status=400)
+
     if payload.email == request.user.email.lower():
         return _render(request, 'auth/email_change.html', errors={'email': ['Enter a different email address.']}, status=400)
+
     if get_user_model().objects.filter(email__iexact=payload.email).exclude(pk=request.user.pk).exists():
         return _render(request, 'auth/email_change.html', errors={'email': ['This email address cannot be used.']}, status=400)
+
     if throttled := _throttled(request, scope='email-change', email=payload.email, limit=3, window=3600):
         return throttled
+
     try:
         issue_email_challenge(
             user=request.user,
             purpose=EmailVerificationChallenge.Purpose.EMAIL_CHANGE,
             target_email=payload.email,
         )
+
     except ChallengeCooldown:
         return _render(request, 'auth/email_change.html', errors={'__all__': ['Please wait before requesting another code.']}, status=429)
+
     except EmailDeliveryError:
         log_security_event('email_change_delivery_failed', request, user=request.user, email=payload.email)
+
         return _render(request, 'auth/email_change.html', errors={'__all__': ['We could not send a verification code.']}, status=503)
+
     log_security_event('email_change_requested', request, user=request.user, email=payload.email)
+
     return redirect(f"{reverse('shop:verify_email_change')}?email={payload.email}")
 
 
