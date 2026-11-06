@@ -32,27 +32,49 @@
 }
 
 .login-header {
-   margin-bottom: 35px;
+   position: relative;
+   margin-bottom: 28px;
+   padding-bottom: 18px;
+   text-align: center;
+}
+
+.login-header::after {
+   position: absolute;
+   right: 50%;
+   bottom: 0;
+   width: 56px;
+   height: 2px;
+   border-radius: 999px;
+   background: linear-gradient(90deg, rgba(66, 70, 232, 0.2), var(--accent), rgba(66, 70, 232, 0.2));
+   content: "";
+   transform: translateX(50%);
 }
 
 .login-label {
-   display: block;
-   margin-bottom: 12px;
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   margin-bottom: 11px;
+   padding: 5px 10px;
+   border: 1px solid rgba(66, 70, 232, 0.16);
+   border-radius: 999px;
+   background: rgba(66, 70, 232, 0.07);
    color: var(--accent);
-   font-size: 11px;
+   font-size: 10px;
    font-weight: 700;
-   letter-spacing: 2px;
-   text-align: center;
+   letter-spacing: 1.6px;
 }
 
 .login-header h1 {
+   max-width: 100%;
    margin: 0;
    color: #111;
-   font-size: clamp(2.3rem, 5vw, 3.3rem);
-   font-weight: 800;
-   line-height: 1;
-   letter-spacing: 2.5px;
-   text-align: center;
+   font-size: clamp(1.7rem, 4vw, 2.35rem);
+   font-weight: 750;
+   line-height: 1.12;
+   letter-spacing: 0.08em;
+   text-wrap: balance;
+   overflow-wrap: anywhere;
 }
 
 .login-header p {

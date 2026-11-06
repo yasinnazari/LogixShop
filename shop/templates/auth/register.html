@@ -13,9 +13,9 @@
    <div class="container">
       <div class="login-wrapper">
          <div class="login-card">
-            <div class="login-header">
-               <span class="login-label">WELCOME</span>
-               <h1>CREATE ACCOUNT</h1>
+            <div class="login-header auth-heading">
+               <span class="login-label">GET STARTED</span>
+               <h1>REGISTER</h1>
             </div>
 
             {% include "auth/_errors.html" %}
@@ -23,12 +23,12 @@
             <form class="login-form" method="post" novalidate>
                {% csrf_token %}
 
-               <div class="register-name-row">
+               <div class="register-name-row mb-2">
                   <div class="form-group">
-                     <label for="first-name">First name</label>
+                     <label for="first-name">First Name</label>
                      <div class="input-wrapper">
                         <i class="bi bi-person"></i>
-                        <input id="first-name" name="first_name" maxlength="150" autocomplete="given-name" required>
+                        <input id="first-name" name="first_name" maxlength="150" autocomplete="given-name" placeholder="Yasin" required>
                      </div>
                      {% for error in errors.first_name %}
                         <div class="text-danger">{{ error }}</div>
@@ -36,10 +36,10 @@
                   </div>
 
                   <div class="form-group">
-                     <label for="last-name">Last name</label>
+                     <label for="last-name">Last Name</label>
                      <div class="input-wrapper">
                         <i class="bi bi-person"></i>
-                        <input id="last-name" name="last_name" maxlength="150" autocomplete="family-name" required>
+                        <input id="last-name" name="last_name" maxlength="150" autocomplete="family-name" placeholder="Nazari" required>
                      </div>
                      {% for error in errors.last_name %}
                         <div class="text-danger">{{ error }}</div>
@@ -62,7 +62,7 @@
                   <label for="password">Password</label>
                   <div class="input-wrapper">
                      <i class="bi bi-lock"></i>
-                     <input type="password" id="password" name="password" autocomplete="new-password" required>
+                     <input type="password" id="password" name="password" autocomplete="new-password" placeholder="----" required>
                   </div>
                   {% for error in errors.password %}
                      <div class="text-danger">{{ error }}</div>
@@ -70,18 +70,23 @@
                </div>
 
                <div class="form-group">
-                  <label for="password-confirmation">Confirm password</label>
+                  <label for="password-confirmation">Confirm Password</label>
                   <div class="input-wrapper">
                      <i class="bi bi-lock"></i>
-                     <input type="password" id="password-confirmation" name="password_confirmation" autocomplete="new-password" required>
+                     <input type="password" id="password-confirmation" name="password_confirmation" autocomplete="new-password" placeholder="----" required>
                   </div>
                   {% for error in errors.password_confirmation %}
                      <div class="text-danger">{{ error }}</div>
                   {% endfor %}
                </div>
 
-               <button class="login-btn" type="submit">Create Account</button>
+               <button class="login-btn mt-5" type="submit">Create Account</button>
             </form>
+
+            <p class="signup-text mt-5">
+               You have an account ?
+               <a href="{% url 'shop:login' %}">Sign In</a>
+            </p>
          </div>
       </div>
    </div>
