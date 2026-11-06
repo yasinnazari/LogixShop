@@ -1,0 +1,44 @@
+<div class="profile-card profile-sidebar">
+   <div class="profile-avatar">
+      {% if request.user.first_name %}
+         {{ request.user.first_name|first|upper }}
+      {% else %}
+         {{ request.user.email|first|upper }}
+      {% endif %}
+   </div>
+
+   <div class="profile-name">
+      {{ request.user.get_full_name|default:"Your Account" }}
+   </div>
+
+   <div class="profile-email">{{ request.user.email }}</div>
+
+   <hr class="profile-divider">
+
+   <nav class="profile-nav" aria-label="Account navigation">
+      <a href="{% url 'shop:dashboard' %}#personal-info"
+         class="{% if active_section == 'personal' %}active{% endif %}">
+         <i class="bi bi-person"></i>
+         Profile
+      </a>
+
+      <a href="{% url 'shop:account_security' %}"
+         class="{% if active_section == 'security' %}active{% endif %}">
+         <i class="bi bi-shield-lock"></i>
+         Account Security
+      </a>
+
+      <a href="{% url 'shop:home' %}">
+         <i class="bi bi-house"></i>
+         Back to Home
+      </a>
+
+      <form class="profile-logout-form" method="post" action="{% url 'shop:logout' %}">
+         {% csrf_token %}
+         <button class="profile-nav-logout" type="submit">
+            <i class="bi bi-box-arrow-right"></i>
+            Sign Out
+         </button>
+      </form>
+   </nav>
+</div>

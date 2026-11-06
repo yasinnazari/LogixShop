@@ -75,6 +75,30 @@
   font-size: 16px;
 }
 
+.profile-logout-form {
+  margin: 0;
+}
+
+.profile-nav-logout {
+  width: 100%;
+  padding: 12px 13px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #c64655;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  transition: 0.2s;
+}
+
+.profile-nav-logout:hover,
+.profile-nav-logout:focus-visible {
+  background: #fff0f1;
+  color: #a92f3e;
+}
+
 .profile-content {
   padding: 30px;
 }
@@ -193,5 +217,14 @@
 
   .profile-sidebar {
     padding: 22px;
+  }
+
+  .security-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .security-link {
+    white-space: normal;
   }
 }

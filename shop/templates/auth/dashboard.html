@@ -17,44 +17,7 @@
         <div class="row g-4">
 
             <div class="col-lg-3">
-                <div class="profile-card profile-sidebar">
-
-                    <div class="profile-avatar">
-                        {% if request.user.first_name %}
-                            {{ request.user.first_name|first|upper }}
-                        {% else %}
-                            {{ request.user.email|first|upper }}
-                        {% endif %}
-                    </div>
-
-                    <div class="profile-name">
-                        {{ request.user.get_full_name|default:"Your Account" }}
-                    </div>
-
-                    <div class="profile-email">
-                        {{ request.user.email }}
-                    </div>
-
-                    <hr class="profile-divider">
-
-                    <nav class="profile-nav">
-                        <a href="#personal-info" class="active">
-                            <i class="bi bi-person"></i>
-                            Personal Information
-                        </a>
-
-                        <a href="/dashboard/account_security">
-                            <i class="bi bi-shield-lock"></i>
-                            Account Security
-                        </a>
-
-                        <a href="{% url 'shop:home' %}">
-                            <i class="bi bi-house"></i>
-                            Back to Home
-                        </a>
-                    </nav>
-
-                </div>
+                {% include "auth/_dashboard_sidebar.html" with active_section="personal" %}
             </div>
 
             <div class="col-lg-9">
