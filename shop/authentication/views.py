@@ -131,7 +131,7 @@ def register(request):
         return redirect('shop:resend_verification')
 
     log_security_event('registration_created', request, user=user, email=user.email)
-    messages.success(request, 'Check your email for a six-digit verification code.')
+    messages.success(request, 'Your account has been created successfully!')
 
     return redirect(f"{reverse('shop:verify_email')}?email={payload.email}")
 
@@ -221,6 +221,7 @@ def login_view(request):
 
     login(request, user)
     log_security_event('login_succeeded', request, user=user, email=user.email)
+    messages.success(request, 'You have successfully signed in')
 
     return redirect(_safe_next_url(request))
 
@@ -419,6 +420,6 @@ def verify_email_change(request):
         return _render(request, 'auth/verify_email_change.html', errors={'code': ['The code is invalid or expired.']}, status=400)
 
     log_security_event('email_changed', request, user=user, email=user.email)
-    messages.success(request, 'Your email address has been changed.')
+    messages.success(request, 'Your email address has been changed')
 
     return redirect('shop:dashboard')

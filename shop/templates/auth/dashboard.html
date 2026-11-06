@@ -14,13 +14,13 @@
 
         {% include "auth/_errors.html" %}
 
-        <div class="row g-4">
+        <div class="row g-4 dashboard-layout-row">
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 dashboard-sidebar-column">
                 {% include "auth/_dashboard_sidebar.html" with active_section="personal" %}
             </div>
 
-            <div class="col-lg-9">
+            <div class="col-lg-9 dashboard-content-column">
                 <div class="profile-card profile-content mb-4"
                      id="personal-info">
 

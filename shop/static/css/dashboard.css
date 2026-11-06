@@ -5,6 +5,25 @@
   color: #202633;
 }
 
+.dashboard-layout-row {
+  align-items: stretch;
+}
+
+.dashboard-sidebar-column,
+.dashboard-content-column {
+  display: flex;
+  min-width: 0;
+}
+
+.dashboard-content-column {
+  flex-direction: column;
+}
+
+.dashboard-sidebar-column > *,
+.dashboard-content-column > * {
+  width: 100%;
+}
+
 .profile-card {
   border: 1px solid #edf0f4;
   border-radius: 16px;
@@ -13,7 +32,12 @@
 }
 
 .profile-sidebar {
-  height: 100%;
+  height: 470px;
+  width: 100%;
+  flex: 0 0 100%;
+  min-width: 0;
+  max-height: 470px;
+  overflow-y: auto;
   padding: 28px 24px;
 }
 
@@ -100,6 +124,8 @@
 }
 
 .profile-content {
+  width: 100%;
+  min-width: 0;
   padding: 30px;
 }
 
