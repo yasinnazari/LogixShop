@@ -1,49 +1,88 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block title %}LogixShop | Create account{% endblock %}
 
+{% block extra_css %}
+   <link rel="stylesheet" href="{% static 'css/login.css' %}">
+   <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock extra_css %}
+
 {% block content %}
-<section class="py-5">
+<section class="login-page register-page">
    <div class="container">
-      <div class="col-md-6 mx-auto">
-         <h1>Create account</h1>
-         {% include "auth/_errors.html" %}
+      <div class="login-wrapper">
+         <div class="login-card">
+            <div class="login-header">
+               <span class="login-label">WELCOME</span>
+               <h1>CREATE ACCOUNT</h1>
+            </div>
 
-         <form method="post" novalidate>
-            {% csrf_token %}
+            {% include "auth/_errors.html" %}
 
-            <p>
-               <label for="first-name">First name</label>
-               <input id="first-name" name="first_name" maxlength="150" required>
-               {% for error in errors.first_name %}<span class="text-danger">{{ error }}</span>{% endfor %}
-            </p>
+            <form class="login-form" method="post" novalidate>
+               {% csrf_token %}
 
-            <p>
-               <label for="last-name">Last name</label>
-               <input id="last-name" name="last_name" maxlength="150" required>
-               {% for error in errors.last_name %}<span class="text-danger">{{ error }}</span>{% endfor %}
-            </p>
+               <div class="register-name-row">
+                  <div class="form-group">
+                     <label for="first-name">First name</label>
+                     <div class="input-wrapper">
+                        <i class="bi bi-person"></i>
+                        <input id="first-name" name="first_name" maxlength="150" autocomplete="given-name" required>
+                     </div>
+                     {% for error in errors.first_name %}
+                        <div class="text-danger">{{ error }}</div>
+                     {% endfor %}
+                  </div>
 
-            <p>
-               <label for="email">Email</label>
-               <input id="email" type="email" name="email" maxlength="254" autocomplete="email" required>
-               {% for error in errors.email %}<span class="text-danger">{{ error }}</span>{% endfor %}
-            </p>
+                  <div class="form-group">
+                     <label for="last-name">Last name</label>
+                     <div class="input-wrapper">
+                        <i class="bi bi-person"></i>
+                        <input id="last-name" name="last_name" maxlength="150" autocomplete="family-name" required>
+                     </div>
+                     {% for error in errors.last_name %}
+                        <div class="text-danger">{{ error }}</div>
+                     {% endfor %}
+                  </div>
+               </div>
 
-            <p>
-               <label for="password">Password</label>
-               <input id="password" type="password" name="password" autocomplete="new-password" required>
-               {% for error in errors.password %}<span class="text-danger">{{ error }}</span>{% endfor %}
-            </p>
+               <div class="form-group">
+                  <label for="email">Email</label>
+                  <div class="input-wrapper">
+                     <i class="bi bi-envelope"></i>
+                     <input type="email" id="email" name="email" maxlength="254" placeholder="you@example.com" autocomplete="email" required>
+                  </div>
+                  {% for error in errors.email %}
+                     <div class="text-danger">{{ error }}</div>
+                  {% endfor %}
+               </div>
 
-            <p>
-               <label for="password-confirmation">Confirm password</label>
-               <input id="password-confirmation" type="password" name="password_confirmation" autocomplete="new-password" required>
-               {% for error in errors.password_confirmation %}<span class="text-danger">{{ error }}</span>{% endfor %}
-            </p>
+               <div class="form-group">
+                  <label for="password">Password</label>
+                  <div class="input-wrapper">
+                     <i class="bi bi-lock"></i>
+                     <input type="password" id="password" name="password" autocomplete="new-password" required>
+                  </div>
+                  {% for error in errors.password %}
+                     <div class="text-danger">{{ error }}</div>
+                  {% endfor %}
+               </div>
 
-            <button class="btn btn-primary" type="submit">Create account</button>
-         </form>
+               <div class="form-group">
+                  <label for="password-confirmation">Confirm password</label>
+                  <div class="input-wrapper">
+                     <i class="bi bi-lock"></i>
+                     <input type="password" id="password-confirmation" name="password_confirmation" autocomplete="new-password" required>
+                  </div>
+                  {% for error in errors.password_confirmation %}
+                     <div class="text-danger">{{ error }}</div>
+                  {% endfor %}
+               </div>
+
+               <button class="login-btn" type="submit">Create Account</button>
+            </form>
+         </div>
       </div>
    </div>
 </section>

@@ -1,0 +1,41 @@
+.register-page {
+  padding: 28px 0;
+}
+
+.register-page .login-card {
+  max-width: 560px;
+  padding: 32px 40px;
+}
+
+.register-page .login-header {
+  margin-bottom: 24px;
+}
+
+.register-page .form-group {
+  margin-bottom: 16px;
+}
+
+.register-name-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.register-page .login-btn {
+  margin-top: 4px;
+}
+
+@media (max-width: 576px) {
+  .register-page {
+    padding: 20px 15px;
+  }
+
+  .register-page .login-card {
+    padding: 24px 20px;
+  }
+
+  .register-name-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
