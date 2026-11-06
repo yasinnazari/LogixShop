@@ -3,16 +3,22 @@
 }
 
 .register-page .login-card {
-  max-width: 560px;
-  padding: 32px 40px;
+  margin: 2rem 0;
+  max-width: 485px;
 }
 
 .register-page .login-header {
-  margin-bottom: 24px;
+  margin-bottom: 2rem;
 }
 
 .register-page .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 22px;
+}
+
+.register-page .input-wrapper input {
+  height: 52px;
+  padding: 0 45px;
+  font-size: 14px;
 }
 
 .register-name-row {
