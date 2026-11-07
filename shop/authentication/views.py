@@ -306,18 +306,24 @@ class ValidatedPasswordResetConfirmView(PasswordResetConfirmView):
 
     def post(self, request, *args, **kwargs):
         _, errors = _validate(PasswordResetSchema, request)
+
         if errors:
             form = self.get_form()
+
             for field, messages_for_field in errors.items():
                 target = field if field in form.fields else None
                 for message in messages_for_field:
                     form.add_error(target, message)
+
             return self.render_to_response(self.get_context_data(form=form), status=400)
+
         return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         response = super().form_valid(form)
+
         log_security_event('password_reset_completed', self.request, user=self.user, email=self.user.email)
+
         return response
 
 
