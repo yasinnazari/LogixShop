@@ -19,10 +19,13 @@ class EmailSchema(InputSchema):
     @classmethod
     def normalize_and_validate_email(cls, value):
         normalized = value.strip().lower()
+
         try:
             validate_email(normalized)
+
         except DjangoValidationError as exc:
             raise ValueError('Enter a valid email address.') from exc
+
         return normalized
 
 
