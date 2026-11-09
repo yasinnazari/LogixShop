@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 
 
 def require_permission(user, permission):
-    """Use Django permissions rather than role-name checks for protected actions."""
     if not user.is_authenticated or not user.has_perm(permission):
         raise PermissionDenied
 
