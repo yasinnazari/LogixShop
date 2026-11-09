@@ -8,5 +8,4 @@ def require_permission(user, permission):
 
 
 def get_owned_object_or_404(model, *, user, **lookup):
-    """Ownership-scoped lookup for future address/order detail views to prevent IDOR."""
     return get_object_or_404(model, user=user, **lookup)
