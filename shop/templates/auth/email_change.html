@@ -27,7 +27,7 @@
                     <label for="email">New email</label>
                     <div class="input-wrapper">
                         <i class="bi bi-envelope"></i>
-                        <input id="email" type="email" name="email" maxlength="254" autocomplete="email" required>
+                        <input id="email" type="email" name="email" maxlength="254" placeholder="Email" autocomplete="email" required>
                     </div>
                     {% for error in errors.email %}
                         <div class="text-danger">{{ error }}</div>
@@ -38,14 +38,14 @@
                     <label for="current-password">Current password</label>
                     <div class="input-wrapper">
                         <i class="bi bi-lock"></i>
-                        <input id="current-password" type="password" name="current_password" autocomplete="current-password" required>
+                        <input id="current-password" type="password" name="current_password" placeholder="*****" autocomplete="current-password" required>
                     </div>
                     {% for error in errors.current_password %}
                         <div class="text-danger">{{ error }}</div>
                     {% endfor %}
                 </div>
 
-                <button class="login-btn" type="submit">Send 6-digit number</button>
+                <button class="login-btn mt-5" type="submit">Send 6-digit number</button>
             </form>
          </div>
       </div>
