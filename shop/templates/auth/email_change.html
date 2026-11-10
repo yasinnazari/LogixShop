@@ -1,34 +1,55 @@
 {% extends "main/base.html" %}
+{% load static %}
 
-{% block title %}Change email{% endblock %}
+{% block title %}LogixShop | Change email{% endblock %}
+
+{% block extra_css %}
+   <link rel="stylesheet" href="{% static 'css/login.css' %}">
+   <link rel="stylesheet" href="{% static 'css/email-change.css' %}">
+{% endblock extra_css %}
 
 {% block content %}
-<section class="py-5">
-   <div class="container col-md-5">
-      <h1>Change email</h1>
+<section class="login-page email-change-page">
+   <div class="container">
+      <div class="login-wrapper">
+         <div class="login-card">
+            <div class="login-header auth-heading">
+               <span class="login-label">ACCOUNT SETTINGS</span>
+               <h1>CHANGE EMAIL</h1>
+               <p>Update the email address connected to your account.</p>
+            </div>
+
       {% include "auth/_errors.html" %}
 
-      <form method="post" novalidate>
+            <form class="login-form" method="post" novalidate>
          {% csrf_token %}
 
-         <p>
-            <label for="email">New email</label>
-            <input id="email" type="email" name="email" required>
-            {% for error in errors.email %}
-               <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-         </p>
+               <div class="form-group">
+                  <label for="email">New email</label>
+                  <div class="input-wrapper">
+                     <i class="bi bi-envelope"></i>
+                     <input id="email" type="email" name="email" maxlength="254" autocomplete="email" required>
+                  </div>
+                  {% for error in errors.email %}
+                     <div class="text-danger">{{ error }}</div>
+                  {% endfor %}
+               </div>
 
-         <p>
-            <label for="current-password">Current password</label>
-            <input id="current-password" type="password" name="current_password" required>
-            {% for error in errors.current_password %}
-               <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-         </p>
+               <div class="form-group">
+                  <label for="current-password">Current password</label>
+                  <div class="input-wrapper">
+                     <i class="bi bi-lock"></i>
+                     <input id="current-password" type="password" name="current_password" autocomplete="current-password" required>
+                  </div>
+                  {% for error in errors.current_password %}
+                     <div class="text-danger">{{ error }}</div>
+                  {% endfor %}
+               </div>
 
-         <button class="btn btn-primary" type="submit">Send verification code</button>
-      </form>
+               <button class="login-btn" type="submit">Send verification code</button>
+            </form>
+         </div>
+      </div>
    </div>
 </section>
 {% endblock %}

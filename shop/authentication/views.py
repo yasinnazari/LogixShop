@@ -149,8 +149,12 @@ def verify_email(request):
         return _render(request, 'auth/verify_email.html')
 
     if not email:
-        messages.error(request, 'Your verification session has expired. Please request a new code.')
-        return redirect('shop:resend_verification')
+        return _render(
+            request,
+            'auth/verify_email.html',
+            errors={'code': ['Your verification session has expired. Please request a new code.']},
+            status=400,
+        )
 
     payload, errors = _validate(EmailVerificationCodeSchema, request, fields={'code'})
     if errors:

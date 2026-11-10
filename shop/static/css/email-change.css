@@ -1,0 +1,30 @@
+.email-change-page {
+   padding: 28px 0;
+}
+
+.email-change-page .login-card {
+   max-width: 470px;
+   padding: 32px 40px;
+}
+
+.email-change-page .login-header {
+   margin-bottom: 24px;
+}
+
+.email-change-page .form-group {
+   margin-bottom: 18px;
+}
+
+.email-change-page .login-btn {
+   margin-top: 4px;
+}
+
+@media (max-width: 576px) {
+   .email-change-page {
+      padding: 20px 15px;
+   }
+
+   .email-change-page .login-card {
+      padding: 24px 20px;
+   }
+}
