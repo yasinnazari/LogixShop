@@ -12,14 +12,6 @@
          {% csrf_token %}
 
          <p>
-            <label for="email">Email</label>
-            <input id="email" type="email" name="email" value="{{ email }}" required>
-            {% for error in errors.email %}
-               <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-         </p>
-
-         <p>
             <label for="verification-code">Six-digit code</label>
             <input id="verification-code" name="code" inputmode="numeric" pattern="[0-9]{6}" autocomplete="one-time-code" required>
             {% for error in errors.code %}

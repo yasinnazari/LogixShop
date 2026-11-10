@@ -18,6 +18,7 @@ from shop.models import EmailVerificationChallenge
 from .rate_limits import is_rate_limited
 from .schemas import (
     EmailChangeSchema,
+    EmailVerificationCodeSchema,
     EmailVerificationSchema,
     ForgotPasswordSchema,
     LoginSchema,
@@ -47,9 +48,12 @@ def _payload(request):
     }
 
 
-def _validate(schema, request):
+def _validate(schema, request, *, fields=None):
     try:
-        return schema.model_validate(_payload(request)), {}
+        payload = _payload(request)
+        if fields is not None:
+            payload = {key: payload.get(key, '') for key in fields}
+        return schema.model_validate(payload), {}
 
     except PydanticValidationError as exc:
         errors = {}
@@ -131,34 +135,42 @@ def register(request):
         return redirect('shop:resend_verification')
 
     log_security_event('registration_created', request, user=user, email=user.email)
+    request.session['registration_verification_email'] = user.email
     messages.success(request, 'Your account has been created successfully!')
 
-    return redirect(f"{reverse('shop:verify_email')}?email={payload.email}")
+    return redirect('shop:verify_email')
 
 
 @require_http_methods(['GET', 'POST'])
 def verify_email(request):
-    if request.method == 'GET':
-        return _render(request, 'auth/verify_email.html', email=request.GET.get('email', ''))
+    email = request.session.get('registration_verification_email', '')
 
-    payload, errors = _validate(EmailVerificationSchema, request)
+    if request.method == 'GET':
+        return _render(request, 'auth/verify_email.html')
+
+    if not email:
+        messages.error(request, 'Your verification session has expired. Please request a new code.')
+        return redirect('shop:resend_verification')
+
+    payload, errors = _validate(EmailVerificationCodeSchema, request, fields={'code'})
     if errors:
         return _render(request, 'auth/verify_email.html', errors=errors, status=400)
 
-    if throttled := _throttled(request, scope='verify-email', email=payload.email, limit=10, window=300):
+    if throttled := _throttled(request, scope='verify-email', email=email, limit=10, window=300):
         return throttled
 
     try:
         user = verify_email_challenge(
-            email=payload.email,
+            email=email,
             code=payload.code.get_secret_value(),
             purpose=EmailVerificationChallenge.Purpose.REGISTRATION,
         )
 
     except ChallengeError:
-        log_security_event('email_verification_failed', request, email=payload.email)
+        log_security_event('email_verification_failed', request, email=email)
         return _render(request, 'auth/verify_email.html', errors={'code': ['The code is invalid or expired.']}, status=400)
 
+    request.session.pop('registration_verification_email', None)
     login(request, user)
     log_security_event('email_verified', request, user=user, email=user.email)
     messages.success(request, 'Your email has been verified.')
@@ -182,6 +194,7 @@ def resend_verification(request):
     if user:
         try:
             issue_email_challenge(user=user, purpose=EmailVerificationChallenge.Purpose.REGISTRATION)
+            request.session['registration_verification_email'] = user.email
             log_security_event('email_verification_resent', request, user=user, email=user.email)
 
         except (ChallengeCooldown, EmailDeliveryError):
@@ -189,6 +202,7 @@ def resend_verification(request):
 
     messages.success(request, 'If an account exists, a Verification Email will be sent soon')
 
+    request.session['registration_verification_email'] = payload.email
     return redirect('shop:verify_email')
 
 

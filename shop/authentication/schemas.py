@@ -1,7 +1,6 @@
 import re
-
-from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.validators import validate_email
+from django.core.exceptions import ValidationError as DjangoValidationError
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
 
 
@@ -62,7 +61,20 @@ class EmailVerificationSchema(EmailSchema):
     @classmethod
     def code_must_be_six_digits(cls, value):
         if not value.get_secret_value().isdigit():
-            raise ValueError('Enter the six-digit verification code.')
+            raise ValueError('Enter the six-digit verification code')
+
+        return value
+
+
+class EmailVerificationCodeSchema(InputSchema):
+    code: SecretStr = Field(min_length=6, max_length=6)
+
+    @field_validator('code')
+    @classmethod
+    def code_must_be_six_digits(cls, value):
+        if not value.get_secret_value().isdigit():
+            raise ValueError('Enter the six-digit verification code')
+
         return value
 
 
