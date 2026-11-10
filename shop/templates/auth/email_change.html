@@ -16,37 +16,36 @@
             <div class="login-header auth-heading">
                <span class="login-label">ACCOUNT SETTINGS</span>
                <h1>CHANGE EMAIL</h1>
-               <p>Update the email address connected to your account.</p>
             </div>
 
       {% include "auth/_errors.html" %}
 
             <form class="login-form" method="post" novalidate>
-         {% csrf_token %}
+                {% csrf_token %}
 
-               <div class="form-group">
-                  <label for="email">New email</label>
-                  <div class="input-wrapper">
-                     <i class="bi bi-envelope"></i>
-                     <input id="email" type="email" name="email" maxlength="254" autocomplete="email" required>
-                  </div>
-                  {% for error in errors.email %}
-                     <div class="text-danger">{{ error }}</div>
-                  {% endfor %}
-               </div>
+                <div class="form-group">
+                    <label for="email">New email</label>
+                    <div class="input-wrapper">
+                        <i class="bi bi-envelope"></i>
+                        <input id="email" type="email" name="email" maxlength="254" autocomplete="email" required>
+                    </div>
+                    {% for error in errors.email %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
 
-               <div class="form-group">
-                  <label for="current-password">Current password</label>
-                  <div class="input-wrapper">
-                     <i class="bi bi-lock"></i>
-                     <input id="current-password" type="password" name="current_password" autocomplete="current-password" required>
-                  </div>
-                  {% for error in errors.current_password %}
-                     <div class="text-danger">{{ error }}</div>
-                  {% endfor %}
-               </div>
+                <div class="form-group">
+                    <label for="current-password">Current password</label>
+                    <div class="input-wrapper">
+                        <i class="bi bi-lock"></i>
+                        <input id="current-password" type="password" name="current_password" autocomplete="current-password" required>
+                    </div>
+                    {% for error in errors.current_password %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
 
-               <button class="login-btn" type="submit">Send verification code</button>
+                <button class="login-btn" type="submit">Send 6-digit number</button>
             </form>
          </div>
       </div>
