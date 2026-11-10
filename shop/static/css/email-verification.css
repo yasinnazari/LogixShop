@@ -1,0 +1,48 @@
+.email-verification-page {
+   padding: 28px 0;
+}
+
+.email-verification-page .login-card {
+   max-width: 470px;
+   padding: 32px 40px;
+}
+
+.email-verification-page .login-header {
+   margin-bottom: 24px;
+}
+
+.email-verification-page .form-group {
+   margin-bottom: 18px;
+}
+
+.email-verification-page .verification-code-input {
+   padding-right: 20px;
+   letter-spacing: 0.35em;
+   text-align: center;
+}
+
+.verification-code-help {
+   display: block;
+   margin-top: 8px;
+   color: #888;
+   font-size: 12px;
+   line-height: 1.5;
+}
+
+.email-verification-page .login-btn {
+   margin-top: 4px;
+}
+
+.verification-resend-text {
+   margin-top: 18px;
+}
+
+@media (max-width: 576px) {
+   .email-verification-page {
+      padding: 20px 15px;
+   }
+
+   .email-verification-page .login-card {
+      padding: 24px 20px;
+   }
+}
