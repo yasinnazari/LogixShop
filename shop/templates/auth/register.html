@@ -62,7 +62,7 @@
                   <label for="password">Password</label>
                   <div class="input-wrapper">
                      <i class="bi bi-lock"></i>
-                     <input type="password" id="password" name="password" autocomplete="new-password" placeholder="----" required>
+                     <input type="password" id="password" name="password" autocomplete="new-password" placeholder="****" required>
                   </div>
                   {% for error in errors.password %}
                      <div class="text-danger">{{ error }}</div>
@@ -73,7 +73,7 @@
                   <label for="password-confirmation">Confirm Password</label>
                   <div class="input-wrapper">
                      <i class="bi bi-lock"></i>
-                     <input type="password" id="password-confirmation" name="password_confirmation" autocomplete="new-password" placeholder="----" required>
+                     <input type="password" id="password-confirmation" name="password_confirmation" autocomplete="new-password" placeholder="****" required>
                   </div>
                   {% for error in errors.password_confirmation %}
                      <div class="text-danger">{{ error }}</div>
