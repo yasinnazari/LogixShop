@@ -51,8 +51,10 @@ def _payload(request):
 def _validate(schema, request, *, fields=None):
     try:
         payload = _payload(request)
+
         if fields is not None:
             payload = {key: payload.get(key, '') for key in fields}
+
         return schema.model_validate(payload), {}
 
     except PydanticValidationError as exc:

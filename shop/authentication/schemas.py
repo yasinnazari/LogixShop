@@ -1,7 +1,7 @@
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
-from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
+from pydantic import BaseModel, ConfigDict, SecretStr, Field, field_validator
 
 
 PHONE_PATTERN = re.compile(r'^\+?[1-9]\d{6,14}$')
@@ -39,14 +39,17 @@ class RegistrationSchema(EmailSchema):
     def names_must_not_be_blank(cls, value):
         if not value:
             raise ValueError('This field is required.')
+
         return value
 
     @field_validator('password_confirmation')
     @classmethod
     def passwords_must_match(cls, value, info):
         password = info.data.get('password')
+
         if password is not None and password.get_secret_value() != value.get_secret_value():
             raise ValueError('Passwords do not match.')
+
         return value
 
 
@@ -94,8 +97,10 @@ class PasswordResetSchema(InputSchema):
     @classmethod
     def passwords_must_match(cls, value, info):
         password = info.data.get('new_password1')
+
         if password is not None and password.get_secret_value() != value.get_secret_value():
             raise ValueError('Passwords do not match.')
+
         return value
 
 
@@ -113,8 +118,10 @@ class ProfileUpdateSchema(InputSchema):
     def validate_phone_if_present(cls, value):
         if value in (None, ''):
             return None
+
         if not PHONE_PATTERN.fullmatch(value):
             raise ValueError('Enter a valid international phone number.')
+
         return value
 
 
