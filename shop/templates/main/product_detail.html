@@ -1,0 +1,151 @@
+{% extends "main/base.html" %}
+{% load humanize static %}
+
+{% block title %}{{ product.title }} | LogixShop{% endblock %}
+
+{% block extra_css %}
+   <link rel="stylesheet" href="{% static 'css/product-detail.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<main class="product-detail-page">
+   <div class="container">
+      <section class="product-detail-hero" aria-labelledby="product-title">
+         <div class="product-gallery">
+            <div class="product-thumbnails" role="list" aria-label="Product images">
+               {% for image in product.images.all %}
+                  <button class="product-thumbnail{% if forloop.first %} is-active{% endif %}" type="button" data-product-image="{{ image.image.url }}" aria-label="View image {{ forloop.counter }}">
+                     <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.title }}">
+                  </button>
+               {% empty %}
+                  <div class="product-thumbnail product-thumbnail--empty" aria-hidden="true">
+                     <i class="bi bi-image"></i>
+                  </div>
+               {% endfor %}
+            </div>
+
+            <div class="product-main-image">
+               {% with primary_image=product.images.all|first %}
+                  {% if primary_image %}
+                     <img id="product-main-image" src="{{ primary_image.image.url }}" alt="{{ primary_image.alt_text|default:product.title }}">
+                  {% else %}
+                     <div class="product-main-image__empty" role="img" aria-label="No image available">
+                        <i class="bi bi-image"></i>
+                        <span>No image available</span>
+                     </div>
+                  {% endif %}
+               {% endwith %}
+               <button class="product-expand-button" type="button" aria-label="Expand product image">
+                  <i class="bi bi-arrows-fullscreen"></i>
+               </button>
+            </div>
+         </div>
+
+         <div class="product-purchase-panel">
+            <div class="product-stock-status{% if not product.has_stock %} product-stock-status--out{% endif %}">
+               <span></span>{% if product.has_stock %}In Stock{% else %}Out of Stock{% endif %}
+            </div>
+
+            <p class="product-detail-category">{{ product.category_title }}</p>
+            <h1 id="product-title">{{ product.title }}</h1>
+            <p class="product-detail-subtitle">Minimal design. Maximum comfort.</p>
+
+            <div class="product-detail-rating" aria-label="Rated {{ product.rating }} out of 5">
+               <span class="product-rating-stars">
+                  {% for star in product.star_range %}
+                     {% if forloop.counter <= product.full_star %}
+                        <i class="bi bi-star-fill"></i>
+                     {% else %}
+                        <i class="bi bi-star"></i>
+                     {% endif %}
+                  {% endfor %}
+               </span>
+               <strong>{{ product.rating }}</strong>
+               <span>({{ product.rating_count|intcomma }} reviews)</span>
+            </div>
+
+            <div class="product-detail-divider"></div>
+
+            <div class="product-detail-price-row">
+               <strong class="product-detail-price">{{ product.effective_price|intcomma }}</strong>
+               {% if product.discounted_price %}
+                  <del>{{ product.price|intcomma }}</del>
+                  <span class="product-discount-badge">Sale</span>
+               {% endif %}
+            </div>
+
+            <p class="product-detail-description">{{ product.description|default:"A carefully selected product designed for everyday use and lasting comfort." }}</p>
+
+            <fieldset class="product-option-group">
+               <legend>Color</legend>
+               <div class="product-color-options">
+                  <button class="product-color-option product-color-option--light" type="button" aria-label="Light color"></button>
+                  <button class="product-color-option product-color-option--sand" type="button" aria-label="Sand color"></button>
+                  <button class="product-color-option product-color-option--olive" type="button" aria-label="Olive color"></button>
+                  <button class="product-color-option product-color-option--navy" type="button" aria-label="Navy color"></button>
+                  <button class="product-color-option product-color-option--black is-selected" type="button" aria-label="Black color"></button>
+               </div>
+            </fieldset>
+
+            <fieldset class="product-option-group">
+               <legend>Size</legend>
+               <div class="product-size-options">
+                  <button class="product-size-option" type="button">XS</button>
+                  <button class="product-size-option" type="button">S</button>
+                  <button class="product-size-option" type="button">M</button>
+                  <button class="product-size-option is-selected" type="button">L</button>
+                  <button class="product-size-option" type="button">XL</button>
+                  <button class="product-size-option" type="button">XXL</button>
+               </div>
+            </fieldset>
+
+            <div class="product-cart-actions">
+               <div class="product-quantity" aria-label="Quantity selector">
+                  <button type="button" data-quantity-decrease aria-label="Decrease quantity">−</button>
+                  <span data-quantity-value>1</span>
+                  <button type="button" data-quantity-increase aria-label="Increase quantity">+</button>
+               </div>
+               <button class="product-add-button" type="button"{% if not product.has_stock %} disabled{% endif %}>
+                  <i class="bi bi-cart3"></i> Add to Cart
+               </button>
+               <button class="product-wishlist-button" type="button" aria-label="Add to wishlist">
+                  <i class="bi bi-heart"></i>
+               </button>
+            </div>
+
+            <div class="product-service-benefits">
+               <div><i class="bi bi-truck"></i><span><strong>Free Shipping</strong><small>On orders over $50</small></span></div>
+               <div><i class="bi bi-shield-check"></i><span><strong>Secure Payment</strong><small>100% secure</small></span></div>
+               <div><i class="bi bi-arrow-return-left"></i><span><strong>Easy Returns</strong><small>30 days return</small></span></div>
+            </div>
+         </div>
+      </section>
+
+      <section class="product-detail-information" aria-label="Product information">
+         <nav class="product-detail-tabs" aria-label="Product information tabs">
+            <button class="is-active" type="button" data-product-tab="description">Description</button>
+            <button type="button" data-product-tab="specifications">Specifications</button>
+            <button type="button" data-product-tab="reviews">Reviews ({{ product.rating_count|intcomma }})</button>
+            <button type="button" data-product-tab="shipping">Shipping &amp; Returns</button>
+         </nav>
+         <div class="product-detail-copy" data-product-panel="description">
+            <h2>Product Description</h2>
+            <p>{{ product.description|default:"Upgrade your everyday essentials with a thoughtfully designed product made for comfort, reliability, and lasting use." }}</p>
+         </div>
+         <div class="product-detail-copy is-hidden" data-product-panel="specifications">
+            <h2>Specifications</h2>
+            <p>Explore the product details and specifications before completing your purchase.</p>
+         </div>
+         <div class="product-detail-copy is-hidden" data-product-panel="reviews">
+            <h2>Customer Reviews</h2>
+            <p>Rated {{ product.rating }} out of 5 by {{ product.rating_count|intcomma }} customers.</p>
+         </div>
+         <div class="product-detail-copy is-hidden" data-product-panel="shipping">
+            <h2>Shipping &amp; Returns</h2>
+            <p>Enjoy reliable delivery and a straightforward 30-day return experience.</p>
+         </div>
+      </section>
+   </div>
+</main>
+<script src="{% static 'js/product-detail.js' %}"></script>
+{% endblock content %}
