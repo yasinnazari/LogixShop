@@ -35,6 +35,7 @@ class EmailDeliveryError(ChallengeError):
 
 def otp_digest(*, user_id, purpose, code):
     message = f'{user_id}:{purpose}:{code}'.encode()
+
     return hmac.new(settings.EMAIL_OTP_HMAC_SECRET.encode(), message, hashlib.sha256).hexdigest()
 
 
@@ -44,10 +45,12 @@ def _new_username():
 
 def create_unverified_user(*, email, first_name, last_name, password):
     User = get_user_model()
+
     try:
         with transaction.atomic():
             if User.objects.filter(email__iexact=email).exists():
                 raise EmailAlreadyRegistered
+
             user = User.objects.create_user(
                 username=_new_username(),
                 email=email,
@@ -58,6 +61,7 @@ def create_unverified_user(*, email, first_name, last_name, password):
             )
 
             return user
+
     except IntegrityError as exc:
         # The PostgreSQL expression index is the final authority under races.
         raise EmailAlreadyRegistered from exc
@@ -66,6 +70,7 @@ def create_unverified_user(*, email, first_name, last_name, password):
 def issue_email_challenge(*, user, purpose, target_email=''):
     now = timezone.now()
     User = get_user_model()
+
     with transaction.atomic():
         user = User.objects.select_for_update().get(pk=user.pk)
         recent = (
@@ -74,6 +79,7 @@ def issue_email_challenge(*, user, purpose, target_email=''):
             .order_by('-sent_at')
             .first()
         )
+
         if recent and now - recent.sent_at < OTP_RESEND_COOLDOWN:
             raise ChallengeCooldown
 
@@ -82,7 +88,9 @@ def issue_email_challenge(*, user, purpose, target_email=''):
             purpose=purpose,
             consumed_at__isnull=True,
         ).update(consumed_at=now)
+
         code = f'{secrets.randbelow(1_000_000):06d}'
+
         challenge = EmailVerificationChallenge.objects.create(
             user=user,
             purpose=purpose,
@@ -120,12 +128,14 @@ def verify_email_challenge(*, email, code, purpose, user=None):
     now = timezone.now()
     invalid_code = False
     verified_user = None
+
     with transaction.atomic():
         if user is not None:
             try:
                 user = User.objects.select_for_update().get(pk=user.pk)
             except User.DoesNotExist as exc:
                 raise ChallengeError from exc
+
         else:
             try:
                 user = User.objects.select_for_update().get(email__iexact=email)
@@ -138,38 +148,51 @@ def verify_email_challenge(*, email, code, purpose, user=None):
             .order_by('-created_at')
             .first()
         )
+
         if not challenge or challenge.expires_at <= now or challenge.attempts >= challenge.max_attempts:
             raise ChallengeError
+
         expected = otp_digest(user_id=user.pk, purpose=purpose, code=code)
         valid_target = (
             purpose != EmailVerificationChallenge.Purpose.EMAIL_CHANGE
             or challenge.target_email.lower() == email
         )
+
         if not valid_target or not hmac.compare_digest(challenge.code_digest, expected):
             challenge.attempts += 1
             update_fields = ['attempts']
+
             if challenge.attempts >= challenge.max_attempts:
                 challenge.consumed_at = now
                 update_fields.append('consumed_at')
+
             challenge.save(update_fields=update_fields)
             invalid_code = True
+
         else:
             challenge.consumed_at = now
             challenge.attempts += 1
             challenge.save(update_fields=['consumed_at', 'attempts'])
+
             if purpose == EmailVerificationChallenge.Purpose.REGISTRATION:
                 if not user.is_active:
                     user.is_active = True
                     user.save(update_fields=['is_active'])
+
             elif purpose == EmailVerificationChallenge.Purpose.EMAIL_CHANGE:
                 if not challenge.target_email:
                     raise ChallengeError
+
                 try:
                     user.email = challenge.target_email
                     user.save(update_fields=['email'])
+
                 except IntegrityError as exc:
                     raise ChallengeError from exc
+
             verified_user = user
+
     if invalid_code:
         raise ChallengeError
+
     return verified_user
