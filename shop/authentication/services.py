@@ -40,7 +40,7 @@ def otp_digest(*, user_id, purpose, code):
 
 
 def _new_username():
-    return f'user_{secrets.token_hex(16)}'
+    return f'user_{secrets.token_hex(4)}'
 
 
 def create_unverified_user(*, email, first_name, last_name, password):
