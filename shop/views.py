@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch
 from .models import Category, Product, ProductImage
 
@@ -43,6 +44,18 @@ def products(request):
    }
 
    return render(request, './main/products_list.html', context)
+
+
+def product_detail(request, product_id):
+   product = get_object_or_404(
+      Product.objects.prefetch_related(
+         Prefetch('images', queryset=ProductImage.objects.all(), to_attr='detail_images')
+      ),
+      pk=product_id,
+   )
+   calculate_rating([product])
+
+   return render(request, './main/product_detail.html', {'product': product})
 
 
 def calculate_rating(all_products):

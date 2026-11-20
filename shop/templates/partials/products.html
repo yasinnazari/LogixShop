@@ -41,18 +41,18 @@
                         {% endwith %}
 
                         <div class="product-actions">
-                           <button class="product-info-btn" type="button">
+                           <a class="product-info-btn" href="{% url 'shop:product_detail' product_id=product.pk %}">
                               Show Detail
-                           </button>
+                           </a>
                            
                            {% if product.has_stock %}
-                              <button class="quick-add-btn" type="button">
-                                 <i class="bi bi-cart-plus"></i>
-                              </button>
-                           {% else %}      
-                                 <button class="quick-add-btn-disabled" type="button">
+                                <button class="quick-add-btn" type="button">
                                     <i class="bi bi-cart-plus"></i>
-                                 </button>
+                                </button>
+                           {% else %}      
+                                <button class="quick-add-btn-disabled" type="button">
+                                <i class="bi bi-cart-plus"></i>
+                                </button>
                            {% endif %}
                         </div>
 
@@ -61,7 +61,7 @@
                      <div class="product-info mt-2">
                         <span class="product-category"><i class="bi bi-hash"></i> {{ product.category_title }}</span>
                         
-                        <h6 class="mt-1"><a class="text-black" href="#">{{ product.title }}</a></h6>
+                        <h6 class="mt-1"><a class="text-black" href="{% url 'shop:product_detail' product_id=product.pk %}">{{ product.title }}</a></h6>
                         
                         <div class="product-rating">
                            <div class="rating-stars">
