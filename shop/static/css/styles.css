@@ -313,6 +313,15 @@ a {
     isolation: isolate;
 }
 
+.cart-preview-wrapper::after {
+    position: absolute;
+    top: 100%;
+    right: -10px;
+    left: -10px;
+    height: 7px;
+    content: "";
+}
+
 .cart-trigger {
     z-index: 2;
 }
@@ -320,7 +329,7 @@ a {
 .cart-preview {
     position: absolute !important;
     display: block;
-    top: calc(100% + 14px);
+    top: calc(100% + 7px);
     right: 0;
     bottom: auto;
     left: auto;
@@ -504,6 +513,10 @@ a {
 }
 
 @media (max-width: 575.98px) {
+    .cart-preview-wrapper::after {
+        display: none;
+    }
+
     .cart-preview {
         position: fixed !important;
         top: 72px;

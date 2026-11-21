@@ -67,7 +67,7 @@
                 <div class="product-detail-divider"></div>
 
                 <div class="product-detail-price-row">
-                <strong class="product-detail-price">${{ product.effective_price|intcomma }}</strong>
+                <strong class="product-detail-price">{{ product.effective_price|intcomma }}</strong>
                 {% if product.discounted_price %}
                     <del>{{ product.price|intcomma }}</del>
                     <span class="product-discount-badge">Discounted</span>
