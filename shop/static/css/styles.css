@@ -469,8 +469,22 @@ a {
     grid-template-columns: 52px minmax(0, 1fr) auto;
     gap: 11px;
     align-items: center;
+    max-height: 80px;
+    overflow: hidden;
     padding: 12px 0;
     border-bottom: 1px solid rgba(17, 17, 17, 0.07);
+    transition: max-height 0.22s ease, margin 0.22s ease, padding 0.22s ease, border-color 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
+}
+
+.cart-preview-item.is-removing {
+    max-height: 0;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-color: transparent;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(8px) scale(0.97);
 }
 
 .cart-preview-item-image {

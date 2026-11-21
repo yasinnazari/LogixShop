@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             remove.className = 'cart-preview-item-remove';
             remove.type = 'button';
             remove.dataset.removeUrl = item.remove_url;
-            remove.setAttribute('aria-label', `Remove ${item.name} from cart`);
+         remove.setAttribute('aria-label', `Remove ${item.name} from cart`);
             remove.innerHTML = '<i class="bi bi-trash3"></i>';
             article.append(image, details, remove);
             fragment.appendChild(article);
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const action = document.createElement('a');
         action.className = 'cart-preview-action';
         action.href = '#';
-        action.textContent = 'View cart ';
+        action.textContent = 'View Cart';
         const arrow = document.createElement('i');
         arrow.className = 'bi bi-arrow-right';
         action.appendChild(arrow);
@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCart(data);
             wrapper.classList.add('is-open');
             trigger.setAttribute('aria-expanded', 'true');
+         window.showNotification?.({ message: 'Product Added Successfully' });
         } catch (error) {
             // Keep the existing UI stable when the request cannot be completed.
         } finally {
@@ -140,6 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!remove) return;
 
         remove.disabled = true;
+        const item = remove.closest('.cart-preview-item');
+        item?.classList.add('is-removing');
+        await new Promise((resolve) => setTimeout(resolve, 220));
+
         try {
             const response = await fetch(remove.dataset.removeUrl, {
                 method: 'POST',
@@ -149,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
             });
             if (response.ok) renderCart(await response.json());
+        } catch (error) {
+            item?.classList.remove('is-removing');
         } finally {
             remove.disabled = false;
         }
