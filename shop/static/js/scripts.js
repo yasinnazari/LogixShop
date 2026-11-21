@@ -50,7 +50,13 @@
         }
 
         const notification = document.createElement('div');
-        notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} site-notification notification--${type}`;
+        const alertClass = {
+            success: 'alert-success',
+            error: 'alert-danger',
+            warning: 'alert-warning',
+            info: 'alert-info',
+        }[type] || 'alert-info';
+        notification.className = `alert ${alertClass} site-notification notification--${type}`;
         notification.dataset.notification = '';
         notification.dataset.notificationDuration = '15000';
         notification.setAttribute('role', 'alert');
