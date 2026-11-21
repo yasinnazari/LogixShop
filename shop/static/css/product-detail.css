@@ -401,6 +401,12 @@
    gap: clamp(20px, 4vw, 54px);
    border-bottom: 1px solid #ececf1;
    overflow-x: auto;
+   scrollbar-width: none;
+   -ms-overflow-style: none;
+}
+
+.product-detail-tabs::-webkit-scrollbar {
+   display: none;
 }
 
 .product-detail-tabs button {

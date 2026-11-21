@@ -5,58 +5,56 @@
 {% endblock extra_css %}
 
 <section class="hero">
-   <div class="container">
-      <div class="row align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="login-label">LOGIX COMMUNITY</span>
 
-         <div class="col-lg-6">
+                <h1 class="hero-heading">
+                    Click. Buy. <span>Done.</span>
+                </h1>
 
-            <span class="login-label">LOGIX COMMUNITY</span>
+                <p class="hero-description">
+                    Great Products Better Deals
+                </p>
 
-            <h1 class="hero-heading">
-               Click. Buy. <span>Done.</span>
-            </h1>
+                <div class="d-flex gap-3 mt-5">
+                <a class="btn btn-dark hero-btn rounded" href="#products">
+                    Shop Now <i class="bi bi-arrow-right ms-2"></i>
+                </a>
 
-            <p class="hero-description">
-               Great Products Better Deals
-            </p>
+                    <a class="btn btn-outline-dark hero-btn rounded" href="#categories">
+                        Explore Categories
+                </a>
+                </div>
 
-            <div class="d-flex gap-3 mt-5">
-               <a class="btn btn-dark hero-btn rounded" href="#products">
-                  Shop Now <i class="bi bi-arrow-right ms-2"></i>
-               </a>
+                <div class="hero-stats">
 
-               <a class="btn btn-outline-dark hero-btn rounded" href="#categories">
-                  Explore Categories
-               </a>
+                <div>
+                    <strong>200+</strong>
+                    <span>Products</span>
+                </div>
+
+                <div>
+                    <strong>4.7</strong>
+                    <span>Customer Rating</span>
+                </div>
+
+                <div>
+                    <strong>24/7</strong>
+                    <span>Support</span>
+                </div>
+
+                </div>
+
             </div>
 
-            <div class="hero-stats">
-
-               <div>
-                  <strong>200+</strong>
-                  <span>Products</span>
-               </div>
-
-               <div>
-                  <strong>4.7</strong>
-                  <span>Customer Rating</span>
-               </div>
-
-               <div>
-                  <strong>24/7</strong>
-                  <span>Support</span>
-               </div>
-
+            <div class="col-lg-6">
+                <div class="hero-image-wrapper">
+                <img class="hero-image" src="{% static 'assets/VectorShop1.jpg' %}" alt="LogixShop">
+                </div>
             </div>
 
-         </div>
-
-         <div class="col-lg-6">
-            <div class="hero-image-wrapper">
-               <img class="hero-image" src="{% static 'assets/VectorShop1.jpg' %}" alt="LogixShop">
-            </div>
-         </div>
-
-      </div>
+        </div>
    </div>
 </section>

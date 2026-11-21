@@ -1,57 +1,57 @@
 {% load static %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
-   <div class="container py-2">
+    <div class="container py-2">
 
-      <a class="navbar-brand" href="/" aria-label="LogixShop home">
-        <img class="navbar-logo" src="{% static 'assets/LOGIX_SHOP3.png' %}" alt="LogixShop">
-      </a>
+        <a class="navbar-brand" href="/" aria-label="LogixShop home">
+            <img class="navbar-logo" src="{% static 'assets/LOGIX_SHOP3.png' %}" alt="LogixShop">
+        </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-         <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="mainNavbar">
-         <ul class="navbar-nav mx-auto gap-lg-4">
-               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'shop:home' %}">Home</a>
-               </li>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mx-auto gap-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:home' %}">Home</a>
+                </li>
 
-               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'shop:products' %}">Products</a>
-               </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:products' %}">Products</a>
+                </li>
 
-               <li class="nav-item">
-                  <a class="nav-link" href="/#categories">Categories</a>
-               </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#categories">Categories</a>
+                </li>
 
-               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'shop:about' %}">About</a>
-               </li>
-         </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:about' %}">About</a>
+                </li>
+            </ul>
 
-         <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3">
 
-               <button class="icon-btn">
-                  <i class="bi bi-search"></i>
-               </button>
+                <button class="icon-btn">
+                    <i class="bi bi-search"></i>
+                </button>
 
-               <button class="icon-btn position-relative">
-                  <i class="bi bi-bag"></i>
-                  <span class="cart-count">0</span>
-               </button>
+                <button class="icon-btn position-relative">
+                    <i class="bi bi-bag"></i>
+                    <span class="cart-count">0</span>
+                </button>
 
-               {% if request.user.is_authenticated %}
-                  <a href="{% url 'shop:dashboard' %}" class="sign-btn"><i class="bi bi-person"></i> Dashboard</a>
-               {% else %}
-                  <a href="{% url 'shop:login' %}" class="sign-btn">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'shop:dashboard' %}" class="sign-btn"><i class="bi bi-person"></i> Dashboard</a>
+                {% else %}
+                    <a href="{% url 'shop:login' %}" class="sign-btn">
                     <i class="bi bi-person"></i>
                     Sign In
-                  </a>
-               {% endif %}
-         </div>
+                    </a>
+                {% endif %}
+            </div>
 
-      </div>
+        </div>
 
-   </div>
+    </div>
 </nav>
