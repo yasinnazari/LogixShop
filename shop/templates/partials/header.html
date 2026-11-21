@@ -37,7 +37,7 @@
                 </button>
 
                 <div class="cart-preview-wrapper">
-                    <button class="icon-btn cart-trigger" type="button" aria-expanded="false" aria-controls="cart-preview" aria-label="Open shopping cart">
+                    <button class="icon-btn cart-trigger" type="button" data-cart-summary-url="{% url 'shop:cart_summary' %}" data-csrf-token="{{ csrf_token }}" aria-expanded="false" aria-controls="cart-preview" aria-label="Open shopping cart">
                         <i class="bi bi-bag"></i>
                         <span class="cart-count">0</span>
                     </button>
@@ -56,24 +56,7 @@
                             <a href="{% url 'shop:products' %}" class="cart-preview-action mt-4">Explore Products <i class="bi bi-arrow-right"></i></a>
                         </div>
 
-                        <div class="cart-preview-list" hidden aria-hidden="true">
-                            <article class="cart-preview-item">
-                                <div class="cart-preview-item-image"><i class="bi bi-image"></i></div>
-                                <div class="cart-preview-item-details">
-                                    <h3>Product name</h3>
-                                    <span>Qty 1</span>
-                                </div>
-                                <strong>$0.00</strong>
-                            </article>
-                            <article class="cart-preview-item">
-                                <div class="cart-preview-item-image"><i class="bi bi-image"></i></div>
-                                <div class="cart-preview-item-details">
-                                    <h3>Product name</h3>
-                                    <span>Qty 1</span>
-                                </div>
-                                <strong>$0.00</strong>
-                            </article>
-                            <a href="#" class="cart-preview-action">View cart <i class="bi bi-arrow-right"></i></a>
+                        <div class="cart-preview-list" data-cart-list hidden aria-hidden="true">
                         </div>
                     </div>
                 </div>

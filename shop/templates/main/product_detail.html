@@ -108,7 +108,7 @@
                     <span data-quantity-value>1</span>
                     <button type="button" data-quantity-increase aria-label="Increase quantity">+</button>
                 </div>
-                <button class="product-add-button" type="button"{% if not product.has_stock %} disabled{% endif %}>
+                <button class="product-add-button" type="button" data-add-to-cart data-cart-url="{% url 'shop:add_to_cart' product_id=product.pk %}" data-csrf-token="{{ csrf_token }}"{% if not product.has_stock %} disabled{% endif %}>
                     <i class="bi bi-cart3"></i> Add to Cart
                 </button>
                 <button class="product-wishlist-button" type="button" aria-label="Add to wishlist">
