@@ -4,6 +4,11 @@
    background: #fafafd;
 }
 
+.product-detail-page > .container {
+   width: min(1320px, calc(100% - 48px));
+   max-width: none;
+}
+
 .product-detail-hero {
    display: grid;
    grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
@@ -485,6 +490,10 @@
 @media (max-width: 575.98px) {
    .product-detail-page {
       padding: 24px 0 48px;
+   }
+
+   .product-detail-page > .container {
+      width: calc(100% - 30px);
    }
 
    .product-gallery {

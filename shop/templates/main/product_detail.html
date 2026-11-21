@@ -48,9 +48,9 @@
 
                 <p class="product-detail-category"><i class="bi bi-hash h6 "></i>{{ product.category_title }}</p>
                 <h1 id="product-title">{{ product.title }}</h1>
-                <p class="product-detail-subtitle">Minimal design. Maximum comfort.</p>
+                {% comment %} <p class="product-detail-subtitle">Minimal design. Maximum comfort.</p> {% endcomment %}
 
-                <div class="product-detail-rating" aria-label="Rated {{ product.rating }} out of 5">
+                <div class="product-detail-rating mt-2" aria-label="Rated {{ product.rating }} out of 5">
                 <span class="product-rating-stars">
                     {% for star in product.star_range %}
                         {% if forloop.counter <= product.full_star %}
@@ -67,7 +67,7 @@
                 <div class="product-detail-divider"></div>
 
                 <div class="product-detail-price-row">
-                <strong class="product-detail-price">{{ product.effective_price|intcomma }}</strong>
+                <strong class="product-detail-price">${{ product.effective_price|intcomma }}</strong>
                 {% if product.discounted_price %}
                     <del>{{ product.price|intcomma }}</del>
                     <span class="product-discount-badge">Discounted</span>
