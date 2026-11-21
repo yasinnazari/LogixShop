@@ -511,13 +511,24 @@ a {
 
 .cart-preview-item-details .cart-preview-item-price {
    display: block;
-    color: #292934;
+    color: #777;
+}
+
+.cart-preview-item-price i {
+    margin-right: 4px;
+    color: #777;
+    font-size: 11px;
 }
 
 .cart-preview-item-quantity {
    display: block;
    margin-top: 3px;
    color: #858591;
+}
+
+.cart-preview-item-quantity i {
+    margin-right: 3px;
+    font-size: 10px;
 }
 
 .cart-preview-item-remove {

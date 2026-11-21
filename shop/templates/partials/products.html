@@ -46,13 +46,13 @@
                             </a>
                             
                             {% if product.has_stock %}
-                                    <button class="quick-add-btn" type="button" data-add-to-cart data-cart-url="{% url 'shop:add_to_cart' product_id=product.pk %}" data-csrf-token="{{ csrf_token }}" aria-label="Add {{ product.title }} to cart">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                            {% else %}      
-                                    <button class="quick-add-btn-disabled" type="button">
+                                <button class="quick-add-btn" type="button" data-add-to-cart data-cart-url="{% url 'shop:add_to_cart' product_id=product.pk %}" data-csrf-token="{{ csrf_token }}" aria-label="Add {{ product.title }} to cart">
                                     <i class="bi bi-cart-plus"></i>
-                                    </button>
+                                </button>
+                            {% else %}
+                                <button class="quick-add-btn-disabled" type="button">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
                             {% endif %}
                             </div>
 

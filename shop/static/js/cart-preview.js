@@ -47,10 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
             name.textContent = item.name;
             const quantity = document.createElement('span');
             quantity.className = 'cart-preview-item-quantity';
-            quantity.textContent = `${item.quantity}x`;
+            const quantityIcon = document.createElement('i');
+            quantityIcon.className = 'bi bi-box-seam';
+            quantity.append(quantityIcon, document.createTextNode(` ${item.quantity}x`));
             const price = document.createElement('span');
             price.className = 'cart-preview-item-price';
-            price.textContent = item.price;
+            const tagIcon = document.createElement('span');
+            tagIcon.textContent = '$';
+            price.append(tagIcon, document.createTextNode(` ${item.price}`));
             details.append(name, price, quantity);
 
             const remove = document.createElement('button');
