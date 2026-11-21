@@ -107,8 +107,9 @@ def issue_email_challenge(*, user, purpose, target_email=''):
         send_mail(
             subject='Your LogixShop verification code',
             message=(
-                f'Your verification code is {code}. It expires in 5 minutes. '
-                'If you did not request this, you can ignore this email.'
+                f'Your verification code is:{code}'
+                'It expires in 5 minutes'
+                'If you did not request this, you can ignore this email'
             ),
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[recipient],
