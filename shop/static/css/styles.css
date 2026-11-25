@@ -363,11 +363,18 @@ a {
 
 .cart-preview-wrapper:hover .cart-preview,
 .cart-preview-wrapper:focus-within .cart-preview,
-.cart-preview-wrapper.is-open .cart-preview {
+.cart-preview-wrapper.is-click-open .cart-preview {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0) scale(1);
     visibility: visible;
+}
+
+.cart-preview-wrapper.is-click-closed .cart-preview {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    visibility: hidden;
 }
 
 .cart-preview-header {

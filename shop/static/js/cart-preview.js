@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) return;
 
             renderCart(data);
-            wrapper.classList.add('is-open');
+         wrapper.classList.remove('is-click-closed');
+         wrapper.classList.add('is-click-open');
             trigger.setAttribute('aria-expanded', 'true');
          window.showNotification?.({ message: 'Product Added Successfully' });
         } catch (error) {
@@ -128,9 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     trigger.addEventListener('click', (event) => {
         event.stopPropagation();
-        const isOpen = wrapper.classList.toggle('is-open');
+      const isOpen = !wrapper.classList.contains('is-click-open');
+      wrapper.classList.toggle('is-click-open', isOpen);
+      wrapper.classList.toggle('is-click-closed', !isOpen);
         trigger.setAttribute('aria-expanded', String(isOpen));
     });
+
+   wrapper.addEventListener('mouseleave', () => {
+      wrapper.classList.remove('is-click-closed');
+      if (!wrapper.classList.contains('is-click-open')) {
+         trigger.setAttribute('aria-expanded', 'false');
+      }
+   });
 
     document.querySelectorAll('[data-add-to-cart]').forEach((button) => {
         button.addEventListener('click', () => addToCart(button));
@@ -163,14 +173,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (event) => {
         if (!wrapper.contains(event.target)) {
-            wrapper.classList.remove('is-open');
+         wrapper.classList.remove('is-click-open');
+         wrapper.classList.remove('is-click-closed');
             trigger.setAttribute('aria-expanded', 'false');
         }
     });
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            wrapper.classList.remove('is-open');
+         wrapper.classList.remove('is-click-open');
+         wrapper.classList.add('is-click-closed');
             trigger.setAttribute('aria-expanded', 'false');
             trigger.focus();
         }
