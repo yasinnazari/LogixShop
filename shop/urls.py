@@ -35,6 +35,7 @@ urlpatterns = [
 
    path('dashboard/', authentication_views.dashboard, name='dashboard'),
    path('dashboard/account_security', authentication_views.account_security, name='account_security'),
+   path('dashboard/admin/', authentication_views.admin_panel, name='admin_panel'),
 
    path('email/change/', authentication_views.email_change, name='email_change'),
    path('email/change/verify/', authentication_views.verify_email_change, name='verify_email_change'),

@@ -208,7 +208,7 @@ class Address(models.Model):
             with transaction.atomic():
                 type(self.user).objects.select_for_update().get(pk=self.user_id)
                 if Address.objects.filter(user_id=self.user_id).exclude(pk=self.pk).count() >= 3:
-                raise ValidationError('A user may have at most three saved addresses.')
+                    raise ValidationError('A user may have at most three saved addresses.')
                 return super().save(*args, **kwargs)
         return super().save(*args, **kwargs)
 

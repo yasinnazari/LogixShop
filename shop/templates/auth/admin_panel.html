@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Panel | LogixShop</title>
+   <link rel="icon" href="{% static 'assets/mainlogix.svg' %}">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+   <link rel="stylesheet" href="{% static 'css/admin-panel.css' %}">
+</head>
+<body class="admin-panel-body">
+    <div class="admin-panel-shell">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="admin-brand" href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/LOGIX_SHOP3.png' %}" alt="LogixShop">
+                <span>Admin</span>
+            </a>
+
+            <div class="admin-sidebar-heading">Workspace</div>
+            <nav class="admin-nav">
+                <a class="is-active" href="#overview"><i class="bi bi-grid-1x2"></i>Overview</a>
+                <a href="#orders"><i class="bi bi-bag-check"></i>Orders</a>
+                <a href="#reviews"><i class="bi bi-chat-left-text"></i>Reviews</a>
+                <a href="#products"><i class="bi bi-box-seam"></i>Products</a>
+                <a href="#categories"><i class="bi bi-tags"></i>Categories</a>
+                <a href="#customers"><i class="bi bi-people"></i>Customers</a>
+            </nav>
+
+            <div class="admin-sidebar-footer">
+                <a class="admin-store-link" href="{% url 'shop:home' %}">
+                <i class="bi bi-arrow-left"></i>
+                Back to Store
+                </a>
+                <form method="post" action="{% url 'shop:logout' %}">
+                {% csrf_token %}
+                <button class="admin-signout" type="submit">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Sign Out
+                </button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="admin-main" id="overview">
+            <header class="admin-page-header">
+                <div>
+                    <p class="admin-eyebrow">LogixShop Admin</p>
+                    <h1>Overview</h1>
+                </div>
+                <div class="admin-user-chip">
+                    <span class="admin-user-avatar">
+                        {% if request.user.first_name %}{{ request.user.first_name|first|upper }}{% else %}{{ request.user.email|first|upper }}{% endif %}
+                    </span>
+                    <span>{{ request.user.get_full_name|default:request.user.username }}</span>
+                </div>
+            </header>
+
+            <div class="admin-preview-note">
+                <i class="bi bi-info-circle"></i>
+            </div>
+
+            <section class="admin-section" id="orders" aria-labelledby="orders-heading">
+                <div class="admin-section-heading">
+                    <div>
+                        <h2 id="orders-heading">ORDERS</h2>
+                    </div>
+                <a href="#orders" class="admin-text-link">View all <i class="bi bi-arrow-up-right"></i></a>
+                </div>
+                <div class="admin-content-grid">
+                    <article class="admin-panel-card admin-panel-card--wide">
+                        <div class="admin-card-heading">
+                            <h3>Recent Orders</h3>
+                            <span class="admin-placeholder-label">Preview</span>
+                        </div>
+                        <div class="admin-order-list">
+                            <div class="admin-order-row"><span><strong>#LS-1042</strong><small>Customer order</small></span><span class="admin-status admin-status--pending">Pending</span><span class="admin-row-date">Today</span></div>
+                            <div class="admin-order-row"><span><strong>#LS-1041</strong><small>Customer order</small></span><span class="admin-status admin-status--processing">Processing</span><span class="admin-row-date">Yesterday</span></div>
+                            <div class="admin-order-row"><span><strong>#LS-1040</strong><small>Customer order</small></span><span class="admin-status admin-status--complete">Completed</span><span class="admin-row-date">Yesterday</span></div>
+                        </div>
+                    </article>
+                    <article class="admin-panel-card">
+                        <div class="admin-card-heading"><h3>Pending Orders</h3><span class="admin-count-badge">3</span></div>
+                        <p class="admin-card-copy">Orders that may need confirmation or fulfillment review.</p>
+                        <a href="#orders" class="admin-card-action">Review pending orders <i class="bi bi-arrow-right"></i></a>
+                    </article>
+                </div>
+            </section>
+
+            {% comment %} <section class="admin-section" id="reviews" aria-labelledby="reviews-heading">
+                <div class="admin-section-heading">
+                    <div><p class="admin-eyebrow">Customer voice</p><h2 id="reviews-heading">Recent Customer Reviews</h2></div>
+                    <a href="#reviews" class="admin-text-link">View all <i class="bi bi-arrow-up-right"></i></a>
+                </div>
+                <article class="admin-panel-card">
+                    <div class="admin-review-row"><span class="admin-review-avatar">A</span><div><strong>Customer review preview</strong><p>Recent product feedback will appear here when connected to the review data.</p></div><span class="admin-rating"><i class="bi bi-star-fill"></i> —</span></div>
+                    <div class="admin-review-row"><span class="admin-review-avatar">L</span><div><strong>Customer review preview</strong><p>This space is reserved for the latest customer comments.</p></div><span class="admin-rating"><i class="bi bi-star-fill"></i> —</span></div>
+                </article>
+            </section> {% endcomment %}
+
+            <section class="admin-section" aria-labelledby="quick-access-heading">
+                <div class="admin-quick-grid">
+                    <a id="products" class="admin-quick-link" href="#products"><i class="bi bi-box-seam"></i><span><strong>Products</strong><small>Manage the catalog</small></span><i class="bi bi-arrow-up-right"></i></a>
+                    <a id="categories" class="admin-quick-link" href="#categories"><i class="bi bi-tags"></i><span><strong>Categories</strong><small>Organize product groups</small></span><i class="bi bi-arrow-up-right"></i></a>
+                    <a id="customers" class="admin-quick-link" href="#customers"><i class="bi bi-people"></i><span><strong>Customers</strong><small>Review customer accounts</small></span><i class="bi bi-arrow-up-right"></i></a>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

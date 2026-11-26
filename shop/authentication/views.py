@@ -374,6 +374,17 @@ def dashboard(request):
     return redirect('shop:dashboard')
 
 
+@require_http_methods(['GET'])
+@login_required
+def admin_panel(request):
+    """Render the UI-only admin panel shell.
+
+    Management data is intentionally not queried yet; the page is the
+    frontend foundation for a later, permission-aware admin implementation.
+    """
+    return render(request, 'auth/admin_panel.html')
+
+
 @require_http_methods(['GET', 'POST'])
 @login_required
 def account_security(request):
