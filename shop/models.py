@@ -498,7 +498,7 @@ class StockMovement(models.Model):
         ]
 
 
-    class InventoryReservation(models.Model):
+class InventoryReservation(models.Model):
     class Status(models.TextChoices):
         ACTIVE = 'ACTIVE', 'Active'
         CONSUMED = 'CONSUMED', 'Consumed'
@@ -521,7 +521,7 @@ class StockMovement(models.Model):
         ]
 
 
-    class OrderStatusHistory(models.Model):
+class OrderStatusHistory(models.Model):
     order = models.ForeignKey(Order, related_name='status_history', on_delete=models.CASCADE)
     old_status = models.CharField(max_length=24, null=True, blank=True)
     new_status = models.CharField(max_length=24)
